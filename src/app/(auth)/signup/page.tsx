@@ -5,7 +5,7 @@
 // It is smart to render as MUCH as you can on server side rather then client side render
 
 import { Metadata } from "next";
-import signupImage from "@/app/assets/loginImage.jpg";
+import signupImage from "../../assets/signupImage.jpg";
 import Image from "next/image";
 import Link from "next/link";
 import SignUpForm from "./SignUpForm";

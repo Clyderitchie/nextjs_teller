@@ -1,3 +1,5 @@
+//  Client Component always needs it's own file
+
 "use client";
 
 import { loginSchema, LoginValues } from "@/lib/validations";
@@ -68,7 +70,7 @@ export default function LoginForm() {
             </FormItem>
           )}
         />
-        <LoadingButton loading={isPending} type="submit" className="w-full">
+         <LoadingButton loading={isPending} type="submit" className="w-full">
           Log in
         </LoadingButton>
       </form>

@@ -5,27 +5,30 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider        = "prisma-client-js"
+  provider = "prisma-client-js"
   previewFeatures = ["fullTextSearch"]
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  provider = "postgresql"
+  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
   directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
 
-model Teller {
-  id           String     @id
-  username     String     @unique
+model User {
+  id           String    @id
+  username     String    @unique
   displayName  String
-  email        String?    @unique
+  email        String?   @unique
   passwordHash String?
+  googleId     String?   @unique
+  avatarUrl    String?
+  bio          String?
   sessions     Session[]
 
   createdAt DateTime @default(now())
 
-  @@map("tellers")
+  @@map("users") // Renames model to users
 }
 
 model Session {
@@ -33,7 +36,7 @@ model Session {
   userId    String
   expiresAt DateTime
 
-  user Teller @relation(references: [id], fields: [userId], onDelete: Cascade)
+  user User @relation(references: [id], fields: [userId], onDelete: Cascade) // Connects to user table as a one to many relationship
 
   @@map("sessions")
 }
