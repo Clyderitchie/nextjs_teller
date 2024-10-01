@@ -5,13 +5,13 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["fullTextSearch"]
 }
 
 datasource db {
-  provider = "postgresql"
-  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
   directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
 
@@ -39,4 +39,67 @@ model Session {
   user User @relation(references: [id], fields: [userId], onDelete: Cascade) // Connects to user table as a one to many relationship
 
   @@map("sessions")
+}
+
+model Client {
+  id      String    @id
+  name    String
+  email   String
+  phone   String
+  Account Account[]
+  Card    Card[]
+  Loan    Loan[]
+  Service Service[]
+
+  @@map("clients")
+}
+
+model Account {
+  id       String @id
+  clientId String
+  number   Int
+  type     String
+  intrest  String
+
+  createdAt DateTime @default(now())
+
+  client Client @relation(references: [id], fields: [clientId], onDelete: Cascade)
+
+  @@map("accounts")
+}
+
+model Card {
+  id         String @id
+  clientId   String
+  cardNumber Int    @unique
+
+  createdAt DateTime @default(now())
+
+  client Client @relation(references: [id], fields: [clientId], onDelete: Cascade)
+
+  @@map("cards")
+}
+
+model Loan {
+  id         String @id
+  clientId   String
+  loanNumber Int    @unique
+
+  createdAt DateTime @default(now())
+
+  client Client @relation(references: [id], fields: [clientId], onDelete: Cascade)
+
+  @@map("loans")
+}
+
+model Service {
+  id       String @id
+  clientId String
+  type     String
+
+  createdAt DateTime @default(now())
+
+  client Client @relation(references: [id], fields: [clientId], onDelete: Cascade)
+
+  @@map("services")
 }
