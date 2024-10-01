@@ -62,7 +62,7 @@ export default async function Page({ params: { username } }: PageProps) {
         <UserProfile user={user} loggedInUserId={loggedInUser.id} />
         <div className="rounded-2xl bg-card p-5 shadow-sm">
           <h2 className="text-center text-2xl font-bold">
-            {user.displayName}&apos;s posts
+            {/* {user.displayName}&apos;s posts */}
           </h2>
         </div>
       </div>
@@ -76,38 +76,55 @@ interface UserProfileProps {
 }
 
 async function UserProfile({ user, loggedInUserId }: UserProfileProps) {
-//   const followerInfo: FollowerInfo = {
-//     followers: user._count.followers,
-//     isFollowedByUser: user.followers.some(
-//       ({ followerId }) => followerId === loggedInUserId,
-//     ),
-//   };
-
   return (
-    <div className="h-fit w-full space-y-5 rounded-2xl bg-card p-5 shadow-sm">
-      <UserAvatar
-        avatarUrl={user.avatarUrl}
-        size={250}
-        className="mx-auto size-full max-h-60 max-w-60 rounded-full"
-      />
-      <div className="flex flex-wrap gap-3 sm:flex-nowrap">
-        <div className="me-auto space-y-3">
-          <div>
-            <h1 className="text-3xl font-bold">{user.displayName}</h1>
-            <div className="text-muted-foreground">@{user.username}</div>
-          </div>
-          <div>Member since {formatDate(user.createdAt, "MMM d, yyyy")}</div>
-          <div className="flex items-center gap-3">
-            <span>
-              Posts:{" "}
-              <span className="font-semibold">
-                {/* {formatNumber(user._count.posts)} */}
-              </span>
-            </span>
-            {/* <FollowerCount userId={user.id} initialState={followerInfo} /> */}
+    <>
+      <div className="h-fit w-full space-y-5 rounded-2xl bg-card p-5 shadow-sm">
+        {/* <div className="flex items-center justify-start h-10">
+        <UserAvatar
+          avatarUrl={user.avatarUrl}
+          size={250}
+          className="mx-auto size-full max-h-60 max-w-60 rounded-full"
+        />
+      </div> */}
+        <div className="flex flex-wrap gap-3 sm:flex-nowrap">
+          <div className="me-auto space-y-3">
+            <div>
+              <h1 className="text-3xl font-bold">{user.displayName}</h1>
+            </div>
+            <div className="grid grid-cols-1 gap-4 p-3 md:grid-cols-2">
+              <div>
+                <span className="text-xl font-bold">Member since: </span>
+                {formatDate(user.createdAt, "MMM d, yyyy")}
+              </div>
+              <div>
+                <span className="text-xl font-bold">Address: </span>address
+                placeholder
+              </div>
+              <div>
+                <span className="text-xl font-bold">Phone Number: </span>phone
+                number placeholder
+              </div>
+              <div>
+                <span className="text-xl font-bold">Email: </span>email
+                placeholder
+              </div>
+              <div>
+                <span className="text-xl font-bold">SSN/TIN: </span>ssn/tin
+                placeholder
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+      <div className="h-fit w-full space-y-5 rounded-2xl bg-card p-5 shadow-sm">
+        <h1 className="text-3xl font-bold">Accounts: </h1>
+      </div>
+      <div className="h-fit w-full space-y-5 rounded-2xl bg-card p-5 shadow-sm">
+        <h1 className="text-3xl font-bold">Products and Services: </h1>
+      </div>
+      <div className="h-fit w-full space-y-5 rounded-2xl bg-card p-5 shadow-sm">
+        <h1 className="text-3xl font-bold">Loans: </h1>
+      </div>
+    </>
   );
 }
