@@ -62,6 +62,16 @@ export default function MenuBar({ className }: MenuBarProps) {
         <span className="hidden lg:inline">Products</span>
         </Link>
       </Button>
+      <Button
+       variant="ghost"
+       className="flex items-center justify-start gap-3"
+       title="Settings"
+       asChild>
+        <Link href='/settings'>
+        <Settings/>
+        <span className="hidden lg:inline">Settings</span>
+        </Link>
+      </Button>
     </div>
   );
 }
