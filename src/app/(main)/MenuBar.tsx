@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Bell, Bookmark, Home, Mail, Settings } from "lucide-react";
+import { WalletCards, Wallet, Home, Info, Settings, DollarSign } from "lucide-react";
 import Link from "next/link";
 
 interface MenuBarProps {
@@ -23,45 +23,43 @@ export default function MenuBar({ className }: MenuBarProps) {
       <Button
         variant="ghost"
         className="flex items-center justify-start gap-3"
-        title="Notification"
+        title="Information"
         asChild
       >
-        <Link href="/notifications">
-          <Bell />
-          <span className="hidden lg:inline">Notifications</span>
+        <Link href="information">
+        <Info/>
+        <span className="hidden lg:inline">Information</span>
         </Link>
       </Button>
       <Button
         variant="ghost"
         className="flex items-center justify-start gap-3"
-        title="Messages"
+        title="Home"
         asChild
       >
-        <Link href="/messages">
-          <Mail />
-          <span className="hidden lg:inline">Messages</span>
+        <Link href={`/accounts`}>
+        <DollarSign/>
+          <span className="hidden lg:inline">All Accounts</span>
         </Link>
       </Button>
       <Button
-        variant="ghost"
-        className="flex items-center justify-start gap-3"
-        title="Bookmarks"
-        asChild
-      >
-        <Link href="/bookmarks">
-          <Bookmark />
-          <span className="hidden lg:inline">Bookmarks</span>
+       variant="ghost"
+       className="flex items-center justify-start gap-3"
+       title="Loans"
+       asChild>
+        <Link href='/loans'>
+        <Wallet/>
+        <span className="hidden lg:inline">Loans</span>
         </Link>
       </Button>
       <Button
-        variant="ghost"
-        className="flex items-center justify-start gap-3"
-        title="Settings"
-        asChild
-      >
-        <Link href="/settings">
-          <Settings />
-          <span className="hidden lg:inline">Settings</span>
+       variant="ghost"
+       className="flex items-center justify-start gap-3"
+       title="Products"
+       asChild>
+        <Link href='/products'>
+        <WalletCards/>
+        <span className="hidden lg:inline">Products</span>
         </Link>
       </Button>
     </div>
