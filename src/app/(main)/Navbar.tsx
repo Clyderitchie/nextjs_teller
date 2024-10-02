@@ -1,16 +1,18 @@
 import SearchField from "@/components/SearchField";
 import UserButton from "@/components/UserButton";
+import CreateButton from "@/components/CreateButton";
 import Link from "next/link";
 
 export default function Navbar() {
   return (
-    <header className="sticky top-0 z-10 bg-card shadow-sm">
-      <div className="max-w-7xl mx-auto flex items-center justify-center flex-wrap gap-5 px-5 py-3">
+    <header className="sticky top-0 z-20 bg-card shadow-md">
+      <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-5 px-5 py-3">
         <Link href="/" className="text-2xl font-bold text-primary">
           Teller Central
         </Link>
         <SearchField />
         <UserButton className="sm:ms-auto" />
+        <CreateButton />
       </div>
     </header>
   );

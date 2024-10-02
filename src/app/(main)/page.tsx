@@ -1,21 +1,14 @@
-// import PostEditor from "@/components/posts/editor/PostEditor";
-// import Post from "@/components/posts/Post";
-// import TrendsSidebar from "@/components/TrendsSidebar";
+import { Button } from "@/components/ui/button";
 import prisma from "@/lib/prisma";
-// import { postDataInclude } from "@/lib/types";
+import { UserRoundPlus } from "lucide-react";
+import Link from "next/link";
 
 export default async function Home() {
-  // const posts = await prisma.post.findMany({
-  //   include: postDataInclude,
-  //   orderBy: { createdAt: "desc" },
-  // });
   return (
     // Main class below is responsible for setting background color for the Post screen section
-    <main className="w-full min-w-0 flex gap-5">
-      <div className="w-full min-w-0 space-y-5">
-       Home Page
-      </div>
-      {/* <TrendsSidebar /> */}
+    // Setting to Flex-Col for testing
+    <main className="flex w-full min-w-0 flex-col gap-5">
+      <div className="w-full min-w-0 space-y-5">Home Page</div>
     </main>
   );
 }
