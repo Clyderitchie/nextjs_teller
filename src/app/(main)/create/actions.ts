@@ -46,6 +46,7 @@ export async function submitCustomer(input: string) {
     email: input,
     phone: input,
   });
-   await prisma.$connect
+   await prisma.customer
+//    Prisma.customer is not being found but Customer model is in prisma studio and db has been pushed and merged
 //    TODO: FIx prisma schema issues with customers
 }
