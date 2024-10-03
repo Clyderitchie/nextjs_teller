@@ -20,6 +20,8 @@ export const loginSchema = z.object({
 
 export type LoginValues = z.infer<typeof loginSchema>;
 
-export const createPostSchema = z.object({
-  content: requiredString,
+export const createCustomerSchema = z.object({
+  name: requiredString,
+  email: requiredString,
+  phone: requiredString,
 });
