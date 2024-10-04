@@ -41,65 +41,13 @@ model Session {
   @@map("sessions")
 }
 
-model Client {
-  id      String    @id
-  name    String
-  email   String
-  phone   String
-  Account Account[]
-  Card    Card[]
-  Loan    Loan[]
-  Service Service[]
-
-  @@map("clients")
-}
-
-model Account {
-  id       String @id
-  clientId String
-  number   Int
-  type     String
-  intrest  String
+model Customer {
+  id      String @id @default(cuid())
+  content String
+  userId  String
+  
 
   createdAt DateTime @default(now())
 
-  client Client @relation(references: [id], fields: [clientId], onDelete: Cascade)
-
-  @@map("accounts")
-}
-
-model Card {
-  id         String @id
-  clientId   String
-  cardNumber Int    @unique
-
-  createdAt DateTime @default(now())
-
-  client Client @relation(references: [id], fields: [clientId], onDelete: Cascade)
-
-  @@map("cards")
-}
-
-model Loan {
-  id         String @id
-  clientId   String
-  loanNumber Int    @unique
-
-  createdAt DateTime @default(now())
-
-  client Client @relation(references: [id], fields: [clientId], onDelete: Cascade)
-
-  @@map("loans")
-}
-
-model Service {
-  id       String @id
-  clientId String
-  type     String
-
-  createdAt DateTime @default(now())
-
-  client Client @relation(references: [id], fields: [clientId], onDelete: Cascade)
-
-  @@map("services")
+  @@map("customers")
 }

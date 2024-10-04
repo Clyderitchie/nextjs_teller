@@ -2,30 +2,78 @@
 
 import { Input } from "@/components/ui/input";
 import { ToggleLeft, ToggleRight } from "lucide-react";
+import { useState } from "react";
+import { submitCustomer } from "./actions";
 
-export default function CreateClient() {
+export default function CreateCustomer() {
+  const [formData, setFormData] = useState({
+    CustomerName: "",
+    PhoneNumber: "",
+    Email: "",
+  });
+
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+    console.log(`${name}: ${value}`);
+  }
+
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+
+    const customerData = {
+      name: formData.CustomerName,
+      email: formData.Email,
+      phone: formData.PhoneNumber,
+    };
+
+    try {
+      await submitCustomer(customerData);
+      console.log("Customer data submitted: ", customerData);
+    } catch (error) {
+      console.error("Error submitting customer:", error);
+    }
+  };
+
   return (
     <>
       <div className="flex w-[48.5vw] flex-col justify-start md:min-w-[50vw]">
         <div className="border">
-          <h2>Client Information:</h2>
-          <Input
-            name="ClientName"
-            placeholder="Name"
-            className="my-7 min-w-full"
-          />
-          <Input
-            name="ClientName"
-            placeholder="Phone Number"
-            className="my-7 min-w-full"
-          />
-          <Input
-            name="ClientName"
-            placeholder="Email"
-            className="my-7 min-w-full"
-          />
+          <h2>Customer Information:</h2>
+          <form onSubmit={handleSubmit}>
+            <Input
+              name="CustomerName"
+              placeholder="Name"
+              value={formData.CustomerName}
+              onChange={handleChange}
+              className="my-7 min-w-full"
+            />
+            <Input
+              name="PhoneNumber"
+              placeholder="Phone Number"
+              value={formData.PhoneNumber}
+              onChange={handleChange}
+              className="my-7 min-w-full"
+            />
+            <Input
+              name="Email"
+              placeholder="Email"
+              value={formData.Email}
+              onChange={handleChange}
+              className="my-7 min-w-full"
+            />
+            <button
+              type="submit"
+              className="mt-4 rounded bg-blue-500 px-4 py-2 text-white"
+            >
+              Submit
+            </button>
+          </form>
+
           <div className="my-3 flex">
-            {/* TODO: Make this div a choice to show either button depending on whats clicked. Checking - Savings layout */}
             <h2 className="mx-3">Account Type:</h2>
             <ToggleLeft className="mx-4" />
             Checking
@@ -58,5 +106,3 @@ export default function CreateClient() {
     </>
   );
 }
-
-// TODO: Finish the input fields for createing a new client then add logic in for it.
