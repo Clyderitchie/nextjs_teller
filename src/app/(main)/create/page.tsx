@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { ToggleLeft, ToggleRight } from "lucide-react";
 import { useState } from "react";
 import { submitCustomer } from "./actions";
+import OptionButton from "@/components/OptionButton";
 
 export default function CreateCustomer() {
   const [formData, setFormData] = useState({
@@ -72,8 +73,17 @@ export default function CreateCustomer() {
               Submit
             </button>
           </form>
+          <div className="my-3">
+            <OptionButton />
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
 
-          <div className="my-3 flex">
+{
+  /* <div className="my-3 flex">
             <h2 className="mx-3">Account Type:</h2>
             <ToggleLeft className="mx-4" />
             Checking
@@ -100,9 +110,5 @@ export default function CreateCustomer() {
             Online banking
             <ToggleRight className="mx-4" />
             Overdraft Protection
-          </div>
-        </div>
-      </div>
-    </>
-  );
+          </div> */
 }
