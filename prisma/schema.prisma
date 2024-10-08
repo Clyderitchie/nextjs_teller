@@ -42,12 +42,46 @@ model Session {
 }
 
 model Customer {
-  id      String @id @default(cuid())
-  content String
-  userId  String
-  
+  id          String    @id @default(cuid())
+  name        String
+  phoneNumber String
+  email       String
+  address     String
+  ssn         String
+  birthday    DateTime
+  userId      String
+  accounts    Account[]
 
   createdAt DateTime @default(now())
 
   @@map("customers")
+}
+
+model Account {
+  id            String @id @default(cuid())
+  accountType   String
+  accountNumber Int
+  customerId    String
+  cards         Card[]
+
+  customer Customer @relation(references: [id], fields: [customerId], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@map("accounts")
+}
+
+model Card {
+  id         String   @id @default(cuid())
+  debitCard  Boolean
+  creditCard Boolean
+  cardNumber Int
+  expDate    DateTime
+  accountId  String
+
+  account Account @relation(references: [id], fields: [accountId], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@map("cards")
 }

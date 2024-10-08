@@ -23,5 +23,17 @@ export type LoginValues = z.infer<typeof loginSchema>;
 export const createCustomerSchema = z.object({
   name: requiredString,
   email: requiredString,
-  phone: requiredString,
+  phone: z.string().regex(/^\d{10}$/, "Phone number must be exactly 10 digits"),
+  address: requiredString,
+  ssn: z.string().regex(/^\d{9}$/, "SSN must be exactly 9 digits"),
+  birthday: z.string().refine(
+    (value) => {
+      const date = new Date(value);
+      return !isNaN(date.getTime()) && date.toISOString().startsWith(value); // Validates if date is valid and in ISO-8601 format
+    },
+    {
+      message:
+        "Invalid birthday format. Must be in ISO-8601 format (YYYY-MM-DD).",
+    },
+  ),
 });

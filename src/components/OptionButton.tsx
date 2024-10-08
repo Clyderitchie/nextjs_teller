@@ -23,7 +23,7 @@ export default function OptionButton({ className }: OptionButtonProps) {
   return (
     <>
       <div className={className} onClick={handleToggled}>
-        {isToggled ? <ToggleRight /> : <ToggleLeft />}
+        {isToggled ? <h2>No<ToggleRight /> </h2>: <h2>Yes <ToggleLeft /></h2>}
       </div>
     </>
   );

@@ -1,27 +1,37 @@
 "use server";
 
-import prisma from "@/lib/prisma";
 import { validateRequest } from "@/auth";
+import prisma from "@/lib/prisma";
 import { createCustomerSchema } from "@/lib/validations";
 
 export async function submitCustomer(input: {
   name: string;
   email: string;
   phone: string;
+  address: string;
+  ssn: string;
+  birthday: string;
 }) {
   const { user } = await validateRequest();
 
   if (!user) throw Error("Unauthorized");
 
   try {
-    const { name, email, phone } = createCustomerSchema.parse(input);
+    const { name, email, phone, address, ssn, birthday } = createCustomerSchema.parse(input);
+
+    const birthdayDate = new Date(birthday); // Create a Date object
 
     const newClient = await prisma.customer.create({
       data: {
         id: name,
-        content: `${name} - ${email} - ${phone}`,
+        name: name,
+        phoneNumber: phone,
+        email: email,
+        address: address,
+        ssn: ssn,
+        birthday: birthdayDate,
         userId: user.id,
-        createdAt: new Date().toISOString(),
+        createdAt: new Date(),
       },
     });
     console.log("Client created successfully: ", newClient);
