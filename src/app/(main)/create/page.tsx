@@ -73,7 +73,7 @@ export default function CreateCustomer() {
             <Input
               name="phoneNumber"
               placeholder="Phone Number"
-              value={formData.PhoneNumber}
+              value={formData.phoneNumber}
               onChange={handleChange}
               className="my-7 min-w-full"
             />
