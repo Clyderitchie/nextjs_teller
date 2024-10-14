@@ -1,9 +1,8 @@
 // "use client";
 
-// import { Input } from "@/components/ui/input";
 // import { useState } from "react";
 // import { submitCustomer } from "./actions";
-// import OptionButton from "@/components/OptionButton";
+// import CreateField from "@/components/CreateField";
 
 // export default function CreateCustomer() {
 //   const [formData, setFormData] = useState({
@@ -52,79 +51,23 @@
 
 //   return (
 //     <>
-//       <div className="flex w-[48.5vw] flex-col justify-start md:min-w-[50vw]">
-//         <div className="border">
-//           <h2>Customer Information:</h2>
-//           <form onSubmit={handleSubmit}>
-//             <Input
-//               name="CustomerName"
-//               placeholder="Name"
-//               value={formData.CustomerName}
-//               onChange={handleChange}
-//               className="my-7 min-w-full"
-//             />
-//             <Input
-//               name="birthday"
-//               type="date" // Set the type to date
-//               value={formData.birthday}
-//               onChange={handleChange}
-//               className="my-7 min-w-full"
-//             />
-//             <Input
-//               name="phoneNumber"
-//               placeholder="Phone Number"
-//               value={formData.phoneNumber}
-//               onChange={handleChange}
-//               className="my-7 min-w-full"
-//             />
-//             <Input
-//               name="Email"
-//               placeholder="Email"
-//               value={formData.Email}
-//               onChange={handleChange}
-//               className="my-7 min-w-full"
-//             />
-//             <Input
-//               name="Address"
-//               placeholder="Address"
-//               value={formData.Address}
-//               onChange={handleChange}
-//               className="my-7 min-w-full"
-//             />
-//             <Input
-//               name="SSN"
-//               placeholder="SSN"
-//               value={formData.SSN}
-//               onChange={handleChange}
-//               className="my-7 min-w-full"
-//             />
-//             <button
-//               type="submit"
-//               className="mt-4 rounded bg-blue-500 px-4 py-2 text-white"
-//             >
-//               Submit
-//             </button>
-//           </form>
-//           <div className="my-3 border">
-//             <div className="my-2 flex flex-col">
-//               <h2>Account Type:</h2>
-//             </div>
-//             <div className="mx-3 inline-block">
-//               <p>Checking:</p>
-//               <OptionButton />
-//             </div>
-//           </div>
-//         </div>
-//       </div>
+//       <form onSubmit={handleSubmit}>
+//         <CreateField formData={formData} handleChange={handleChange} className="w-[48.5vw] md:min-w-[50vw]" />
+//         <button
+//           type="submit"
+//           className="mt-4 rounded bg-blue-500 px-4 py-2 text-white"
+//         >
+//           Submit
+//         </button>
+//       </form>
 //     </>
 //   );
 // }
 
-
 "use client";
 
 import { useState } from "react";
-import { submitCustomer } from "./actions";
+import { submitCustomer, submitAccount } from "./actions"; // Import submitAccount
 import CreateField from "@/components/CreateField";
 
 export default function CreateCustomer() {
@@ -137,6 +80,8 @@ export default function CreateCustomer() {
     birthday: "",
   });
 
+  const [isSubmitting, setIsSubmitting] = useState(false); // Add a loading state
+
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -148,27 +93,48 @@ export default function CreateCustomer() {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+    setIsSubmitting(true);
 
     const birthday = new Date(formData.birthday).toISOString();
     if (isNaN(Date.parse(birthday))) {
       console.error("Invalid date format for birthday");
+      setIsSubmitting(false);
       return; // Prevent submission if birthday is invalid
     }
 
     const customerData = {
       name: formData.CustomerName,
       email: formData.Email,
-      phone: formData.phoneNumber, 
+      phone: formData.phoneNumber,
       address: formData.Address,
       ssn: formData.SSN, // Send as string
       birthday: birthday,
     };
 
     try {
-      await submitCustomer(customerData);
-      console.log("Customer data submitted: ", customerData);
+      // First, submit the customer data and get the customerId
+      const newCustomer = await submitCustomer(customerData);
+      console.log("Customer data submitted: ", newCustomer);
+
+      if (newCustomer && newCustomer.id) {
+        // Then, automatically create an account for the newly created customer
+        const accountNumber = String(Math.floor(Math.random() * 10000000000)).padStart(10, "0"); // Generate a random account number
+
+        const accountData = {
+          accountType: "Checking",
+          accountNumber: accountNumber,
+          customerId: newCustomer.id, // Use the new customer's ID
+        };
+
+        const newAccount = await submitAccount(accountData);
+        console.log("Account created successfully: ", newAccount);
+
+        alert("Customer and account created successfully!");
+      }
     } catch (error) {
-      console.error("Error submitting customer:", error);
+      console.error("Error submitting customer or creating account:", error);
+    } finally {
+      setIsSubmitting(false); // Reset loading state
     }
   };
 
@@ -179,8 +145,9 @@ export default function CreateCustomer() {
         <button
           type="submit"
           className="mt-4 rounded bg-blue-500 px-4 py-2 text-white"
+          disabled={isSubmitting} // Disable the button while submitting
         >
-          Submit
+          {isSubmitting ? "Submitting..." : "Submit"}
         </button>
       </form>
     </>

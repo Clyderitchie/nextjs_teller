@@ -2,7 +2,8 @@
 
 import { validateRequest } from "@/auth";
 import prisma from "@/lib/prisma";
-import { createCustomerSchema } from "@/lib/validations";
+import { createAccountSchema, createCustomerSchema } from "@/lib/validations";
+import { string } from "zod";
 
 export async function submitCustomer(input: {
   name: string;
@@ -17,13 +18,13 @@ export async function submitCustomer(input: {
   if (!user) throw Error("Unauthorized");
 
   try {
-    const { name, email, phone, address, ssn, birthday } = createCustomerSchema.parse(input);
+    const { name, email, phone, address, ssn, birthday } =
+      createCustomerSchema.parse(input);
 
     const birthdayDate = new Date(birthday); // Create a Date object
 
     const newClient = await prisma.customer.create({
       data: {
-        id: name,
         name: name,
         phoneNumber: phone,
         email: email,
@@ -39,5 +40,31 @@ export async function submitCustomer(input: {
   } catch (error) {
     console.error("Failed to create client: ", error);
     throw new Error("Error creating client");
+  }
+}
+
+export async function submitAccount(input: {
+  accountType: string;
+  accountNumber: string;
+  customerId: string; // Accept the customerId from submitCustomer
+}) {
+  try {
+    const { accountType, accountNumber, customerId } =
+      createAccountSchema.parse(input);
+
+    const newAccount = await prisma.account.create({
+      data: {
+        accountType: accountType,
+        accountNumber: parseInt(accountNumber), // Store the account number as an integer
+        customerId: customerId, // Use the customerId from the created customer
+        createdAt: new Date(),
+      },
+    });
+
+    console.log("Account created successfully: ", newAccount);
+    return newAccount;
+  } catch (error) {
+    console.error("Failed to create account: ", error);
+    throw new Error("Error creating account");
   }
 }

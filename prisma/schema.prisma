@@ -60,7 +60,7 @@ model Customer {
 model Account {
   id            String @id @default(cuid())
   accountType   String
-  accountNumber Int
+  accountNumber String
   customerId    String
   cards         Card[]
 

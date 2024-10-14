@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { useSession } from "@/app/(main)/SessionProvider";
 import OptionButton from "@/components/OptionButton";
+import AccountType from "./Accounts";
 
 interface CreateFieldProps {
   className?: string;
@@ -24,6 +25,7 @@ export default function CreateField({
   handleChange,
 }: CreateFieldProps) {
   const { user } = useSession();
+  console.log(AccountType);
 
   return (
     <>
@@ -71,15 +73,9 @@ export default function CreateField({
           onChange={handleChange}
           className="my-7 min-w-full"
         />
-        <div className="my-3 border">
-          <div className="my-2 flex flex-col">
-            <h2>Account Type:</h2>
-          </div>
-          <div className="mx-3 inline-block">
-            <p>Checking:</p>
-            <OptionButton />
-          </div>
-        </div>
+        {/* <div className="my-3 border">
+         <AccountType customerId={""}/>
+        </div> */}
       </div>
     </>
   );
