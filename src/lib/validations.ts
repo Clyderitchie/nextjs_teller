@@ -19,6 +19,13 @@ export const loginSchema = z.object({
 });
 
 export type LoginValues = z.infer<typeof loginSchema>;
+export const createAccountSchema = z.object({
+  accountType: z.enum(["Checking", "Savings"]),
+  accountNumber: z
+    .string()
+    .length(10, "Account number must be exactly 10 digits"),
+  customerId: z.string().cuid(),
+});
 
 export const createCustomerSchema = z.object({
   name: requiredString,
@@ -36,4 +43,5 @@ export const createCustomerSchema = z.object({
         "Invalid birthday format. Must be in ISO-8601 format (YYYY-MM-DD).",
     },
   ),
+  accounts: z.array(createAccountSchema).optional(),
 });
