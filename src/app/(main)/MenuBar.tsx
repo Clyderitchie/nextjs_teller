@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { WalletCards, Wallet, Home, Info, Settings, DollarSign } from "lucide-react";
+import { WalletCards, Wallet, Home, Info, Settings, DollarSign, User } from "lucide-react";
 import Link from "next/link";
 
 interface MenuBarProps {
@@ -70,6 +70,16 @@ export default function MenuBar({ className }: MenuBarProps) {
         <Link href='/settings'>
         <Settings/>
         <span className="hidden lg:inline">Settings</span>
+        </Link>
+      </Button>
+      <Button
+       variant="ghost"
+       className="flex items-center justify-start gap-3"
+       title="Users"
+       asChild>
+        <Link href='/users'>
+        <User/>
+        <span className="hidden lg:inline">Profile</span>
         </Link>
       </Button>
     </div>

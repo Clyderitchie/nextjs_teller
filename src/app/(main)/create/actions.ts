@@ -68,3 +68,4 @@ export async function submitAccount(input: {
     throw new Error("Error creating account");
   }
 }
+
