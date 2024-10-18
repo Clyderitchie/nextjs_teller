@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { findAllCustomers } from "./actions";
+import Link from "next/link";
 
 export default function profile() {
   const [customers, setCustomers] = useState([]);
@@ -26,6 +27,7 @@ export default function profile() {
       <div>
         <h1>Customer List</h1>
         <ul>
+          <Link href={`/customers/${name}`}
           {customers.map((customer) => (
             <li key={customer.id}>
               <strong>{customer.name}</strong>
