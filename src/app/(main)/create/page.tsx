@@ -122,7 +122,7 @@ export default function CreateCustomer() {
 
         const accountData = {
           accountType: "Checking",
-          accountNumber: accountNumber,
+          accountNumber: String(accountNumber),
           customerId: newCustomer.id, // Use the new customer's ID
         };
 

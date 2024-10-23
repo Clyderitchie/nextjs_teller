@@ -73,9 +73,9 @@ export default function CreateField({
           onChange={handleChange}
           className="my-7 min-w-full"
         />
-        {/* <div className="my-3 border">
+        <div className="my-3 border">
          <AccountType customerId={""}/>
-        </div> */}
+        </div>
       </div>
     </>
   );
