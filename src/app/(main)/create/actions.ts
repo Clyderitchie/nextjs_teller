@@ -55,7 +55,7 @@ export async function submitAccount(input: {
     const newAccount = await prisma.account.create({
       data: {
         accountType: accountType,
-        accountNumber: parseInt(accountNumber), // Store the account number as an integer
+        accountNumber: String(accountNumber), // Store the account number as an integer
         customerId: customerId, // Use the customerId from the created customer
         createdAt: new Date(),
       },
