@@ -23,17 +23,17 @@ export default function profile() {
 
   return (
     <>
-      <div>Profile Page</div>
       <div>
         <h1>Customer List</h1>
         <ul>
           {customers.map((customer) => (
             <li key={customer.id} className="my-5 border-2 border-black">
-                <Link href={`/customers/${customer.name}`}>
+                <Link href={`/customers/${customer.id}`}>
               <div className="flex flex-col">
                 <h1 className="text-center my-2">{customer.name}</h1>
                 <strong className="ps-2">Email: {customer.email}</strong>
                 <p className="ps-2">Phone: {customer.phoneNumber}</p>
+                <p className="ps-2">id: {customer.id}</p>
                 <p className="ps-2">Address: {customer.address}</p>
                 <p className="ps-2">
                   Customer Since:{" "}
