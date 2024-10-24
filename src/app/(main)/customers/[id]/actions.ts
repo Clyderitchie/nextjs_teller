@@ -3,7 +3,7 @@
 import { validateRequest } from "@/auth";
 import prisma from "@/lib/prisma";
 
-export async function findCustomerByName(id: string) {
+export async function findCustomerById(id: string) {
   const { user } = await validateRequest();
 
   if (!user) throw Error("Unauthorized");
