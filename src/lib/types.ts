@@ -22,13 +22,58 @@ export type UserData = Prisma.UserGetPayload<{
   select: ReturnType<typeof getUserDataSelect>;
 }>;
 
-// export const postDataInclude = {
-//   //Prisma way of doing a JOIN for the schema. User is the model and select is the data we want to show in the UI/Front End
-//   user: {
-//     select: userDataSelect,
-//   },
-// } satisfies Prisma.PostInclude;
+export const accountDataSelect = {
+  id: true,
+  accountNumber: true,
+  customerId: true,
+  createdAt: true,
+  accountType: true,
+} satisfies Prisma.AccountSelect;
 
-// export type PostData = Prisma.PostPayload<{
-//   include: typeof postDataInclude;
-// }>;
+export const customerDataSelect = {
+  id: true,
+  name: true,
+  email: true,
+  address: true,
+  birthday: true,
+  phoneNumber: true,
+  userId: true,
+  createdAt: true,
+  accounts: {
+    select: accountDataSelect,
+  },
+} satisfies Prisma.CustomerSelect;
+
+export function getCustomerSelect() {
+  return {
+    id: true,
+    name: true,
+    email: true,
+    address: true,
+    birthday: true,
+    phoneNumber: true,
+    userId: true,
+    createdAt: true,
+    accounts: {
+      select: accountDataSelect,
+    },
+  } satisfies Prisma.CustomerSelect;
+}
+
+export type CustomerData = Prisma.CustomerGetPayload<{
+  select: ReturnType<typeof getCustomerSelect>;
+}>;
+
+export function getAccountSelect() {
+  return {
+    id: true,
+    accountNumber: true,
+    customerId: true,
+    createdAt: true,
+    accountType: true,
+  } satisfies Prisma.AccountSelect;
+}
+
+export type AccountData = Prisma.AccountGetPayload<{
+  select: ReturnType<typeof getAccountSelect>;
+}>;
