@@ -32,26 +32,74 @@ export default async function Page({ params: { id } }: PageProps) {
   const customer = await getCustomer(id);
 
   return (
-    <div>
+    <>
+      <div className="h-screen w-full bg-card p-5 shadow-md">
+        {customer ? (
+          <div>
+            <div className="rounded-md border bg-card px-2 py-3 text-start shadow-sm">
+              <h1 className="min-w-fit max-w-fit py-3 text-2xl">
+                {customer.name}
+              </h1>
+            </div>
+            {/*Customer Name Div */}
+            <div className="row-span-2 flex flex-col justify-around md:flex-row">
+              <div className="my-4 min-w-fit max-w-fit rounded-md border bg-card px-2 py-3 shadow-md">
+                <div className="my-2 flex flex-row items-baseline">
+                  <p className="pe-5 ps-2 text-lg font-semibold">Birthday: </p>
+                  <p> {new Date(customer.birthday).toLocaleDateString()}</p>
+                </div>
+                <div className="my-2 flex flex-row items-baseline">
+                  <p className="pe-5 ps-2 text-lg font-semibold">
+                    Customer Since:{" "}
+                  </p>
+                  <p>{new Date(customer.createdAt).toLocaleDateString()}</p>
+                </div>
+              </div>
+              {/*Customer ID Info Div */}
+              <div className="my-4 min-w-fit max-w-fit rounded-md border bg-card px-2 py-3 shadow-md">
+                <h2 className="ps-2 text-lg font-bold">
+                  Customer Information:{" "}
+                </h2>
+                <div className="my-2 flex flex-row items-baseline">
+                  <p className="pe-5 ps-2 text-lg font-semibold">Address: </p>
+                  <p>{customer.address}</p>
+                </div>
+                <div className="my-2 flex flex-row items-baseline">
+                  <p className="pe-5 ps-2 text-lg font-semibold">
+                    Phone Number:{" "}
+                  </p>
+                  <p>{customer.phoneNumber}</p>
+                </div>
+                <div className="my-2 flex flex-row items-baseline">
+                  <p className="pe-5 ps-2 text-lg font-semibold">Email: </p>
+                  <p>{customer.email}</p>
+                </div>
+              </div>
+              {/*Customer Info Div */}
+            </div>
+            <div className="rounded-md border bg-card px-2 py-3 text-start shadow-sm">
+              <h1 className="min-w-fit max-w-fit py-3 text-2xl">
+                {customer.name} Accounts:
+              </h1>
+              {customer.accounts.map((account) => (
+                <p key={account.id}>
+                  <span className="me-3">{account.accountNumber}</span>
+                  <span>{account.accountType}</span>
+                  <strong className="ms-4">Created At:</strong>{" "}
+                  {new Date(account.createdAt).toLocaleDateString()}
+                </p>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <p>Customer not found</p>
+        )}
+      </div>
+      {/* <div>
       <h1>Customer Information</h1>
       {customer ? (
         <div>
-          <p>
-            <strong>Name:</strong> {customer.name}
-          </p>
-          <p>
-            <strong>Email:</strong> {customer.email}
-          </p>
-          <p>
-            <strong>Address:</strong> {customer.address}
-          </p>
-          <p>
-            <strong>Phone Number:</strong> {customer.phoneNumber}
-          </p>
-          <p>
-            <strong>Birthday:</strong>{" "}
-            {new Date(customer.birthday).toLocaleDateString()}
-          </p>
+        
           <h2>Accounts:</h2>
           <ul>
             {customer.accounts.map((account) => (
@@ -73,66 +121,7 @@ export default async function Page({ params: { id } }: PageProps) {
       ) : (
         <p>Customer not found</p>
       )}
-    </div>
+    </div> */}
+    </>
   );
 }
-
-// import { useEffect, useState } from "react";
-// import { useParams } from "next/navigation";
-// import { findCustomerById } from "./actions";
-
-// export default function CustomerProfile() {
-//   const [customer, setCustomer] = useState(null); // To hold customer data
-//   const { id } = useParams();
-//   console.log("what is customer and setCustomer rendering: ", customer);
-//   useEffect(() => {
-//     async function fetchCustomer() {
-//       try {
-//         const customerProfile = await findCustomerById(id); // Pass the id to the function
-//         setCustomer(customerProfile);
-//       } catch (error) {
-//         console.error("Failed to fetch customer profile: ", error);
-//       }
-//     }
-
-//     if (id) {
-//       fetchCustomer();
-//     }
-//   }, [id]);
-
-//   if (!customer) {
-//     return <p>Loading customer profile...</p>;
-//   }
-
-//   return (
-//     <>
-//       <div className="h-screen min-w-full bg-card p-5 shadow-md">
-//         <div className="rounded-md border bg-card px-2 py-3 text-start shadow-md">
-//           <h1 className="min-w-fit max-w-fit py-3 text-2xl">
-//             {customer.name}'s Profile
-//           </h1>
-//         </div>
-//         <div className="my-4 min-w-fit max-w-fit rounded-md border bg-card px-2 py-3 shadow-md">
-//           <h2 className="text-lg ps-2 font-bold">Customer Information: </h2>
-//           <div className="flex flex-row items-baseline my-2">
-//             <p className="pe-5 ps-2 text-lg font-semibold">Address: </p>
-//             <p>{customer.address}</p>
-//           </div>
-//           <div className="flex flex-row items-baseline my-2">
-//             <p className="pe-5 ps-2 text-lg font-semibold">Phone Number: </p>
-//             <p>{customer.phoneNumber}</p>
-//           </div>
-//           <div className="flex flex-row items-baseline my-2">
-//             <p className="pe-5 ps-2 text-lg font-semibold">Email: </p>
-//             <p>{customer.email}</p>
-//           </div>
-//         </div>
-
-//         <p>
-//           Customer Since: {new Date(customer.createdAt).toLocaleDateString()}
-//         </p>
-//         <p>Birthday: {new Date(customer.birthday).toLocaleDateString()}</p>
-//       </div>
-//     </>
-//   );
-// }
