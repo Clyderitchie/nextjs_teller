@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { findAllCustomers } from "./actions";
 import Link from "next/link";
+import DeleteButton from "@/components/DeleteButton";
 
 export default function profile() {
   const [customers, setCustomers] = useState([]);
@@ -57,6 +58,7 @@ export default function profile() {
                 </p>
               </div>
               </Link>
+              <DeleteButton customerId={customer.id}/>
             </li>
           ))}
         </ul>

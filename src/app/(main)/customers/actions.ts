@@ -28,3 +28,26 @@ export async function findAllCustomers() {
     throw new Error("Error finding all customers");
   }
 }
+
+export async function deleteCustomerById(customerId: string) {
+  try {
+    const customer = await prisma.customer.findUnique({
+      where: { id: customerId },
+    });
+
+    if (!customer) {
+      throw new Error("Customer not found");
+    }
+
+    await prisma.customer.delete({
+      where: {
+        id: customerId,
+      },
+    });
+
+    return { message: "customer was deleted successfully" };
+  } catch (error) {
+    console.error("Trouble with deleting this customer: ", error);
+    throw new Error("Failed to delete");
+  }
+}
