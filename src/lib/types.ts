@@ -77,3 +77,4 @@ export function getAccountSelect() {
 export type AccountData = Prisma.AccountGetPayload<{
   select: ReturnType<typeof getAccountSelect>;
 }>;
+
