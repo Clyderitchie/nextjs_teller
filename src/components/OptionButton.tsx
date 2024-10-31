@@ -1,32 +1,46 @@
-" use client";
+// " use client";
 
-import { useSession } from "@/app/(main)/SessionProvider";
-import { ToggleLeft, ToggleRight } from "lucide-react";
-import { useTheme } from "next-themes";
-import { useState } from "react";
+// import { useSession } from "@/app/(main)/SessionProvider";
+// import { ToggleLeft, ToggleRight } from "lucide-react";
+// import { useTheme } from "next-themes";
+// import { useState } from "react";
+
+// interface OptionButtonProps {
+//   className?: string;
+//   onToggle: (isToggled: boolean) => void; // Callback to pass the toggle state
+// }
+
+
+// export default function OptionButton({ className, onToggle }: OptionButtonProps) {
+//   const [isToggled, setIsToggled] = useState(false);
+
+//   const handleToggled = () => {
+//     const newToggleState = !isToggled;
+//     setIsToggled(newToggleState);
+//     onToggle(newToggleState); // Pass the new state to the parent
+//   };
+
+//   return (
+//     <div className={className} onClick={handleToggled}>
+//       {isToggled ? (
+//         <h2>No <ToggleRight /></h2>
+//       ) : (
+//         <h2>Yes <ToggleLeft /></h2>
+//       )}
+//     </div>
+//   );
+// }
 
 interface OptionButtonProps {
-  className?: string;
-  onToggle: (isToggled: boolean) => void; // Callback to pass the toggle state
+  checked: boolean;
+  onToggle: (value: boolean) => void;
+  // add any other props OptionButton uses
 }
 
-
-export default function OptionButton({ className, onToggle }: OptionButtonProps) {
-  const [isToggled, setIsToggled] = useState(false);
-
-  const handleToggled = () => {
-    const newToggleState = !isToggled;
-    setIsToggled(newToggleState);
-    onToggle(newToggleState); // Pass the new state to the parent
-  };
-
+export default function OptionButton({ checked, onToggle }: OptionButtonProps) {
   return (
-    <div className={className} onClick={handleToggled}>
-      {isToggled ? (
-        <h2>No <ToggleRight /></h2>
-      ) : (
-        <h2>Yes <ToggleLeft /></h2>
-      )}
-    </div>
+    <button onClick={() => onToggle(!checked)}>
+      {checked ? "Checked" : "Unchecked"}
+    </button>
   );
 }
