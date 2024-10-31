@@ -12,13 +12,14 @@ export async function submitCustomer(input: {
   address: string;
   ssn: string;
   birthday: string;
+  identification: string;
 }) {
   const { user } = await validateRequest();
 
   if (!user) throw Error("Unauthorized");
 
   try {
-    const { name, email, phone, address, ssn, birthday } =
+    const { name, email, phone, address, ssn, birthday, identification } =
       createCustomerSchema.parse(input);
 
     const birthdayDate = new Date(birthday); // Create a Date object
@@ -31,6 +32,7 @@ export async function submitCustomer(input: {
         address: address,
         ssn: ssn,
         birthday: birthdayDate,
+        identification: identification,
         userId: user.id,
         createdAt: new Date(),
       },
@@ -68,4 +70,3 @@ export async function submitAccount(input: {
     throw new Error("Error creating account");
   }
 }
-

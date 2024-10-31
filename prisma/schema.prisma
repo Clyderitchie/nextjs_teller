@@ -43,6 +43,7 @@ model Customer {
   ssn         String
   birthday    DateTime
   phoneNumber String
+  identification String
   accounts    Account[]
 
   @@map("customers")
