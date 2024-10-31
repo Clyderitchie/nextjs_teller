@@ -43,5 +43,6 @@ export const createCustomerSchema = z.object({
         "Invalid birthday format. Must be in ISO-8601 format (YYYY-MM-DD).",
     },
   ),
+  identification: requiredString,
   accounts: z.array(createAccountSchema).optional(),
 });

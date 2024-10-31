@@ -39,6 +39,7 @@ export const customerDataSelect = {
   phoneNumber: true,
   userId: true,
   createdAt: true,
+  identification: true,
   accounts: {
     select: accountDataSelect,
   },
@@ -54,6 +55,7 @@ export function getCustomerSelect() {
     phoneNumber: true,
     userId: true,
     createdAt: true,
+    identification: true,
     accounts: {
       select: accountDataSelect,
     },

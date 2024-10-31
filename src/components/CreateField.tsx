@@ -15,6 +15,7 @@ interface CreateFieldProps {
     Address: string;
     SSN: string;
     birthday: string;
+    identification: string
   };
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
@@ -25,7 +26,7 @@ export default function CreateField({
   handleChange,
 }: CreateFieldProps) {
   const { user } = useSession();
-  console.log(AccountType);
+  // console.log(AccountType);
 
   return (
     <>
@@ -70,6 +71,13 @@ export default function CreateField({
           name="SSN"
           placeholder="SSN"
           value={formData.SSN}
+          onChange={handleChange}
+          className="my-7 min-w-full"
+        />
+         <Input
+          name="identification"
+          placeholder="identification"
+          value={formData.identification}
           onChange={handleChange}
           className="my-7 min-w-full"
         />

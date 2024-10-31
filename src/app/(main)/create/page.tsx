@@ -1,69 +1,3 @@
-// "use client";
-
-// import { useState } from "react";
-// import { submitCustomer } from "./actions";
-// import CreateField from "@/components/CreateField";
-
-// export default function CreateCustomer() {
-//   const [formData, setFormData] = useState({
-//     CustomerName: "",
-//     phoneNumber: "",
-//     Email: "",
-//     Address: "",
-//     SSN: "",
-//     birthday: "",
-//   });
-
-//   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-//     const { name, value } = e.target;
-//     setFormData((prevData) => ({
-//       ...prevData,
-//       [name]: value,
-//     }));
-//     console.log(`${name}: ${value}`);
-//   }
-
-//   const handleSubmit = async (event: React.FormEvent) => {
-//     event.preventDefault();
-
-//     const birthday = new Date(formData.birthday).toISOString();
-//     if (isNaN(Date.parse(birthday))) {
-//       console.error("Invalid date format for birthday");
-//       return; // Prevent submission if birthday is invalid
-//     }
-
-//     const customerData = {
-//       name: formData.CustomerName,
-//       email: formData.Email,
-//       phone: formData.phoneNumber, 
-//       address: formData.Address,
-//       ssn: formData.SSN, // Send as string
-//       birthday: birthday,
-//     };
-
-//     try {
-//       await submitCustomer(customerData);
-//       console.log("Customer data submitted: ", customerData);
-//     } catch (error) {
-//       console.error("Error submitting customer:", error);
-//     }
-//   };
-
-//   return (
-//     <>
-//       <form onSubmit={handleSubmit}>
-//         <CreateField formData={formData} handleChange={handleChange} className="w-[48.5vw] md:min-w-[50vw]" />
-//         <button
-//           type="submit"
-//           className="mt-4 rounded bg-blue-500 px-4 py-2 text-white"
-//         >
-//           Submit
-//         </button>
-//       </form>
-//     </>
-//   );
-// }
-
 "use client";
 
 import { useState } from "react";
@@ -78,6 +12,7 @@ export default function CreateCustomer() {
     Address: "",
     SSN: "",
     birthday: "",
+    identification: "",
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false); // Add a loading state
@@ -109,6 +44,7 @@ export default function CreateCustomer() {
       address: formData.Address,
       ssn: formData.SSN, // Send as string
       birthday: birthday,
+      identification: formData.identification,
     };
 
     try {
