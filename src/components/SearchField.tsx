@@ -28,6 +28,8 @@ export default function SearchField() {
     console.log("User input:", query);
 
     router.push(`/customers?q=${query}`);
+
+    setLoading(false);
   }
   return (
     <form onSubmit={handleSubmit} method="GET" action="/customers">
