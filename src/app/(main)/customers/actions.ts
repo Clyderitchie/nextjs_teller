@@ -29,6 +29,36 @@ export async function findAllCustomers() {
   }
 }
 
+export async function searchCustomerByName(query: string) {
+  const { user } = await validateRequest();
+  if (!user) throw new Error("Unauthorized");
+
+  try {
+    const customers = await prisma.customer.findMany({
+      where: {
+        name: {
+          contains: query,
+          mode: "insensitive",
+        },
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        phoneNumber: true,
+        ssn: true,
+        address: true,
+        createdAt: true,
+        birthday: true,
+      },
+    });
+    console.log("Search Results: ", customers);
+  } catch (error) {
+    console.error("error fetching customers for search: ", error);
+    throw new Error("failed on Search");
+  }
+}
+
 export async function deleteCustomerById(customerId: string) {
   try {
     const customer = await prisma.customer.findUnique({
