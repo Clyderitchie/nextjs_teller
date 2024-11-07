@@ -92,6 +92,7 @@ import { findAllCustomers } from "./actions";
 import Link from "next/link";
 import DeleteButton from "@/components/DeleteButton";
 import { useSearchParams } from "next/navigation";
+import MenuButton from "@/components/MenuButton";
 
 interface Customer {
   id: string;
@@ -124,19 +125,20 @@ export default function Profile() {
     fetchCustomers();
   }, []);
 
-  const filteredCustomers = customers.filter(customer =>
-    customer.name.toLowerCase().includes(query)
+  const filteredCustomers = customers.filter((customer) =>
+    customer.name.toLowerCase().includes(query),
   );
 
   return (
     <div>
       <h1>Customer List</h1>
-      {error && <p className="text-red-500">{error}</p>} {/* Style the error message */}
+      {error && <p className="text-red-500">{error}</p>}{" "}
+      {/* Style the error message */}
       {filteredCustomers.length === 0 ? (
         <p>No customers found.</p> // Display a message if no customers match the query
       ) : (
         <ul>
-          {filteredCustomers.map(customer => (
+          {filteredCustomers.map((customer) => (
             <li key={customer.id} className="my-5 border-2 border-black">
               <Link href={`/customers/${customer.id}`}>
                 <div className="flex flex-col">
@@ -148,26 +150,33 @@ export default function Profile() {
                   <p className="ps-2">
                     Customer Since:{" "}
                     {customer.createdAt
-                      ? new Date(customer.createdAt).toLocaleDateString("en-US", {
-                          year: "numeric",
-                          month: "2-digit",
-                          day: "2-digit",
-                        })
+                      ? new Date(customer.createdAt).toLocaleDateString(
+                          "en-US",
+                          {
+                            year: "numeric",
+                            month: "2-digit",
+                            day: "2-digit",
+                          },
+                        )
                       : "N/A"}
                   </p>
                   <p className="ps-2">
                     Birthday:{" "}
                     {customer.birthday
-                      ? new Date(customer.birthday).toLocaleDateString("en-US", {
-                          year: "numeric",
-                          month: "2-digit",
-                          day: "2-digit",
-                        })
+                      ? new Date(customer.birthday).toLocaleDateString(
+                          "en-US",
+                          {
+                            year: "numeric",
+                            month: "2-digit",
+                            day: "2-digit",
+                          },
+                        )
                       : "N/A"}
                   </p>
                 </div>
               </Link>
-              <DeleteButton customerId={customer.id} />
+              
+              <MenuButton customerId={customer.id} />
             </li>
           ))}
         </ul>
