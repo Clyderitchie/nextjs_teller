@@ -1,6 +1,7 @@
 // "use client";
 
 import { validateRequest } from "@/auth";
+import ProfileExtra from "@/components/ProfileExtraButton";
 import prisma from "@/lib/prisma";
 import { customerDataSelect } from "@/lib/types";
 import { notFound } from "next/navigation";
@@ -33,13 +34,14 @@ export default async function Page({ params: { id } }: PageProps) {
 
   return (
     <>
-      <div className="h-screen w-full bg-card p-5 shadow-md">
+      <div className="h-screen w-full bg-card p-4 shadow-md">
         {customer ? (
           <div>
-            <div className="rounded-md border bg-card px-2 py-3 text-start shadow-sm">
+            <div className="flex justify-between items-center rounded-md border bg-card px-2 py-3 text-start shadow-sm">
               <h1 className="min-w-fit max-w-fit py-3 text-2xl">
                 {customer.name}
               </h1>
+              <ProfileExtra customerId={customer.id} />
             </div>
             {/*Customer Name Div */}
             <div className="row-span-2 flex flex-col justify-around md:flex-row">
@@ -77,7 +79,7 @@ export default async function Page({ params: { id } }: PageProps) {
               </div>
               {/*Customer Info Div */}
             </div>
-            <div className="rounded-md border bg-card px-2 py-3 text-start shadow-sm">
+            <div className="rounded-md border bg-card px-4 py-3 text-start shadow-sm">
               <h1 className="min-w-fit max-w-fit py-3 text-2xl">
                 {customer.name} Accounts:
               </h1>
@@ -95,33 +97,6 @@ export default async function Page({ params: { id } }: PageProps) {
           <p>Customer not found</p>
         )}
       </div>
-      {/* <div>
-      <h1>Customer Information</h1>
-      {customer ? (
-        <div>
-        
-          <h2>Accounts:</h2>
-          <ul>
-            {customer.accounts.map((account) => (
-              <li key={account.id}>
-                <p>
-                  <strong>Account Number:</strong> {account.accountNumber}
-                </p>
-                <p>
-                  <strong>Account Type:</strong> {account.accountType}
-                </p>
-                <p>
-                  <strong>Created At:</strong>{" "}
-                  {new Date(account.createdAt).toLocaleDateString()}
-                </p>
-              </li>
-            ))}
-          </ul>
-        </div>
-      ) : (
-        <p>Customer not found</p>
-      )}
-    </div> */}
     </>
   );
 }

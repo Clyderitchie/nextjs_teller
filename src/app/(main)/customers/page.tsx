@@ -131,7 +131,6 @@ export default function Profile() {
 
   return (
     <div>
-      <h1>Customer List</h1>
       {error && <p className="text-red-500">{error}</p>}{" "}
       {/* Style the error message */}
       {filteredCustomers.length === 0 ? (
@@ -139,13 +138,15 @@ export default function Profile() {
       ) : (
         <ul>
           {filteredCustomers.map((customer) => (
-            <li key={customer.id} className="my-5 border-2 border-black">
+            <li
+              key={customer.id}
+              className="my-5 rounded-md border-2 border-black p-5"
+            >
               <Link href={`/customers/${customer.id}`}>
                 <div className="flex flex-col">
-                  <h1 className="my-2 text-center">{customer.name}</h1>
-                  <strong className="ps-2">Email: {customer.email}</strong>
-                  <p className="ps-2">Phone: {customer.phoneNumber}</p>
-                  <p className="ps-2">ID: {customer.id}</p>
+                  <h1 className="my-2 text-center font-bold">{customer.name}</h1>
+                  <p className="ps-2">Email: {customer.email}</p>
+                  <p className="ps-2">Phone: {customer.phoneNumber}</p>                  
                   <p className="ps-2">Address: {customer.address}</p>
                   <p className="ps-2">
                     Customer Since:{" "}
@@ -175,7 +176,6 @@ export default function Profile() {
                   </p>
                 </div>
               </Link>
-              
               <MenuButton customerId={customer.id} />
             </li>
           ))}
