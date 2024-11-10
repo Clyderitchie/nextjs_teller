@@ -1,5 +1,3 @@
-// "use client";
-
 import { validateRequest } from "@/auth";
 import ProfileExtra from "@/components/ProfileExtraButton";
 import prisma from "@/lib/prisma";
