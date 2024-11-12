@@ -28,7 +28,7 @@ export default function EditButton({ customerId }) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const updateCustomerData: Record<string, any> = {customerId};
+    const updateCustomerData: Record<string, any> = { customerId };
 
     // Conditionally add only the fields with non-empty values
     if (formData.CustomerName) updateCustomerData.name = formData.CustomerName;
@@ -36,11 +36,14 @@ export default function EditButton({ customerId }) {
     if (formData.phoneNumber) updateCustomerData.phone = formData.phoneNumber;
     if (formData.Address) updateCustomerData.address = formData.Address;
     if (formData.SSN) updateCustomerData.ssn = formData.SSN;
-    if (formData.identification) updateCustomerData.identification = formData.identification;
+    if (formData.identification)
+      updateCustomerData.identification = formData.identification;
 
     try {
       const customerUpdate = await updateCustomer(updateCustomerData);
       console.log("Customer updated:", customerUpdate);
+      setIsModalOpen(false);
+      window.location.reload();
     } catch (error) {
       console.error("Error updating customer:", error);
     }
@@ -57,7 +60,7 @@ export default function EditButton({ customerId }) {
         Edit
       </Button>
       {isModalOpen && (
-        <div className="fixed h-fit inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
+        <div className="fixed inset-0 z-50 flex h-fit items-center justify-center bg-gray-800 bg-opacity-50">
           <div className="w-96 rounded-lg bg-white p-6 shadow-lg">
             <h2 className="mb-4 text-xl font-semibold">Edit Customer</h2>
             <form onSubmit={handleSubmit}>
