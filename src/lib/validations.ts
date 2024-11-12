@@ -46,3 +46,35 @@ export const createCustomerSchema = z.object({
   identification: requiredString,
   accounts: z.array(createAccountSchema).optional(),
 });
+
+// Define the fields as optional for partial updates
+export const updateCustomerSchema = z.object({
+  name: z.string().min(1, "Name is required").optional(),
+  email: z.string().email("Invalid email address").optional(),
+  phone: z.string().regex(/^\d{10}$/, "Phone number must be exactly 10 digits").optional(),
+  address: z.string().min(1, "Address is required").optional(),
+  ssn: z.string().regex(/^\d{9}$/, "SSN must be exactly 9 digits").optional(),
+  birthday: z
+    .string()
+    .optional()
+    .refine(
+      (value) => {
+        if (!value) return true; // Allow empty value for optional field
+        const date = new Date(value);
+        return !isNaN(date.getTime()) && date.toISOString().startsWith(value); 
+      },
+      {
+        message:
+          "Invalid birthday format. Must be in ISO-8601 format (YYYY-MM-DD).",
+      }
+    ),
+  identification: z.string().min(1, "Identification is required").optional(),
+  accounts: z.array(z.object({
+    accountType: z.enum(["Checking", "Savings"]),
+    accountNumber: z.string().length(10, "Account number must be exactly 10 digits"),
+    customerId: z.string().cuid(),
+  })).optional(),
+});
+
+// Type inference for validation
+export type UpdateCustomerValues = z.infer<typeof updateCustomerSchema>;

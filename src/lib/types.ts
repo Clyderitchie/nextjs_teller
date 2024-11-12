@@ -80,3 +80,6 @@ export type AccountData = Prisma.AccountGetPayload<{
   select: ReturnType<typeof getAccountSelect>;
 }>;
 
+export type UpdateCustomerData = Prisma.CustomerUpdateArgs['data'] & {
+  select?: ReturnType<typeof getCustomerSelect>;
+};

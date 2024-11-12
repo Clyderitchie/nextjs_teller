@@ -31,7 +31,7 @@ export async function findCustomerById(id: string) {
       error,
     );
     throw new Error(
-      "Error Fetching customer from /customers/[name] actions.ts"
+      "Error Fetching customer from /customers/[name] actions.ts",
     );
   }
 }
