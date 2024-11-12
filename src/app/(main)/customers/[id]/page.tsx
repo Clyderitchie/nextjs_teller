@@ -1,5 +1,5 @@
 import { validateRequest } from "@/auth";
-import ProfileExtra from "@/components/ProfileExtraButton";
+import ProfileExtra from "@/components/UpdateCustomer/ProfileExtraButton";
 import prisma from "@/lib/prisma";
 import { customerDataSelect } from "@/lib/types";
 import { notFound } from "next/navigation";
