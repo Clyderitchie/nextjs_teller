@@ -1,4 +1,5 @@
 import { validateRequest } from "@/auth";
+import NewAccount from "@/components/Accounts/newAccount";
 import ProfileExtra from "@/components/UpdateCustomer/ProfileExtraButton";
 import prisma from "@/lib/prisma";
 import { customerDataSelect } from "@/lib/types";
@@ -85,23 +86,28 @@ export default async function Page({ params: { id } }: PageProps) {
               {/*Customer Info Div */}
             </div>
             <div className="rounded-md border bg-card px-4 py-3 text-start shadow-sm">
-              <h1 className="min-w-fit max-w-fit py-3 text-2xl">
-                {customer.name} Accounts:
-              </h1>
+              <div className="flex justify-between">
+                <h1 className="min-w-fit max-w-fit py-3 text-2xl">
+                  {customer.name} Accounts:
+                </h1>
+                <div className="p-2">
+                  <NewAccount customerId={customer.id}/>
+                </div>
+              </div>
               {customer.accounts.map((account) => (
                 <div
                   className="flex flex-row items-center justify-between"
                   key={account.id}
                 >
-                  <div className="w-1/4 border py-5 px-3">
+                  <div className="w-1/4 border px-3 py-5">
                     <h3 className="mb-4">Account Type: </h3>
                     <span>{account.accountType}</span>
                   </div>
-                  <div className="w-1/3 border py-5 px-3">
+                  <div className="w-1/3 border px-3 py-5">
                     <h3 className="mb-4">Account Number: </h3>
                     <span>{account.accountNumber}</span>
                   </div>
-                  <div className="w-1/3 border py-5 px-3">
+                  <div className="w-1/3 border px-3 py-5">
                     <h3 className="mb-4">Created At: </h3>
                     {new Date(account.createdAt).toLocaleDateString()}
                   </div>

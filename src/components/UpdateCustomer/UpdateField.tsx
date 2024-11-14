@@ -72,7 +72,6 @@ export default function UpdateField({
           onChange={handleChange}
           className="rounded-md border p-2 text-black"
         />
-        <AccountType customerId={""} className="text-black" />
       </div>
     </>
   );
