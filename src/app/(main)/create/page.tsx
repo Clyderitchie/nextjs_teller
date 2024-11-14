@@ -15,6 +15,7 @@ export default function CreateCustomer() {
     identification: "",
   });
 
+  const [accountType, setAccountType] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false); // Add a loading state
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -25,6 +26,11 @@ export default function CreateCustomer() {
     }));
     console.log(`${name}: ${value}`);
   }
+
+  const handleAccountTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setAccountType(e.target.value);
+    console.log("Account Type Input:", e.target.value);
+  };
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -57,7 +63,7 @@ export default function CreateCustomer() {
         const accountNumber = String(Math.floor(Math.random() * 10000000000)).padStart(10, "0"); // Generate a random account number
 
         const accountData = {
-          accountType: "Checking",
+          accountType: accountType,
           accountNumber: String(accountNumber),
           customerId: newCustomer.id, // Use the new customer's ID
         };
@@ -78,6 +84,21 @@ export default function CreateCustomer() {
     <>
       <form onSubmit={handleSubmit}>
         <CreateField formData={formData} handleChange={handleChange} className="w-[48.5vw] md:min-w-[50vw]" />
+        
+        {/* Input field for account type */}
+        <div className="my-2">
+          <label htmlFor="accountType">Account Type:</label>
+          <input
+            type="text"
+            id="accountType"
+            name="accountType"
+            placeholder="Enter account type (e.g., Checking, Savings)"
+            value={accountType}
+            onChange={handleAccountTypeChange}
+            className="rounded border p-2 w-full"
+          />
+        </div>
+
         <button
           type="submit"
           className="mt-4 rounded bg-blue-500 px-4 py-2 text-white"

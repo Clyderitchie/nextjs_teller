@@ -45,28 +45,56 @@ export async function submitCustomer(input: {
   }
 }
 
+// export async function submitAccount(input: {
+//   accountType: string;
+//   accountNumber: string;
+//   customerId: string; // Accept the customerId from submitCustomer
+// }) {
+//   try {
+//     const { accountType, accountNumber, customerId } =
+//       createAccountSchema.parse(input);
+
+//     const newAccount = await prisma.account.create({
+//       data: {
+//         accountType: accountType,
+//         accountNumber: String(accountNumber), // Store the account number as an integer
+//         customerId: customerId, // Use the customerId from the created customer
+//         createdAt: new Date(),
+//       },
+//     });
+
+//     console.log("Account created successfully: ", newAccount);
+//     return newAccount;
+//   } catch (error) {
+//     console.error("Failed to create account: ", error);
+//     throw new Error("Error creating account");
+//   }
+// }
+
 export async function submitAccount(input: {
   accountType: string;
   accountNumber: string;
-  customerId: string; // Accept the customerId from submitCustomer
+  customerId: string;
 }) {
   try {
+    console.log("Input received in submitAccount:", input); // Log to inspect input values
+
     const { accountType, accountNumber, customerId } =
       createAccountSchema.parse(input);
 
     const newAccount = await prisma.account.create({
       data: {
         accountType: accountType,
-        accountNumber: String(accountNumber), // Store the account number as an integer
-        customerId: customerId, // Use the customerId from the created customer
+        accountNumber: String(accountNumber),
+        customerId: customerId,
         createdAt: new Date(),
       },
     });
 
-    console.log("Account created successfully: ", newAccount);
+    console.log("Account created successfully:", newAccount);
     return newAccount;
   } catch (error) {
-    console.error("Failed to create account: ", error);
+    console.error("Failed to create account:", error);
     throw new Error("Error creating account");
   }
 }

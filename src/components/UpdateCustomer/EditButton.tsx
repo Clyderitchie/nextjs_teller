@@ -60,7 +60,7 @@ export default function EditButton({ customerId }) {
         Edit
       </Button>
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex h-fit items-center justify-center bg-gray-800 bg-opacity-50">
+        <div className="fixed inset-0 z-50 flex h-screen items-center justify-center bg-gray-800 bg-opacity-50">
           <div className="w-96 rounded-lg bg-white p-6 shadow-lg">
             <h2 className="mb-4 text-xl font-semibold">Edit Customer</h2>
             <form onSubmit={handleSubmit}>

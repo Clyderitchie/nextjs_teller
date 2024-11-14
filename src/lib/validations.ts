@@ -19,8 +19,9 @@ export const loginSchema = z.object({
 });
 
 export type LoginValues = z.infer<typeof loginSchema>;
+
 export const createAccountSchema = z.object({
-  accountType: z.enum(["Checking", "Savings"]),
+  accountType: z.string().min(1, "Account type cannot be empty"),
   accountNumber: z
     .string()
     .length(10, "Account number must be exactly 10 digits"),
