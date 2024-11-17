@@ -35,3 +35,21 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
+
+TODO: 
+-   Refactor the Add New Account for an existing customer
+-   Refactor the Schemas to add in more detail for Customers 
+    -   ID's (Types, ISS, EXP, Number, State/Country)
+    -   Hash important data SSN Phone numbers and so on
+    -   Remarks
+-   Add in page for CFR/BFR's 
+    -   Store this data in the schema under both Customer and Accounts
+-   Layout for Account, Loans, Cards, and any edit pages
+    -   Edit pages have same layout style
+    -   Accounts, Loans, Info, and Profile have a similar layout for their pages
+-   Adding a Debit Card for a Customer and have it attached to an Account
+    -   Hash the Card info, Number, CVV, and EXP Date
+-   Clean up after this is done
+    -   Styling
+    -   Comments for testing
+-   Deploy and make sure it is up to date with latest commit
