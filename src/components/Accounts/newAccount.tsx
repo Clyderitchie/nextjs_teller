@@ -30,7 +30,7 @@ export default function NewAccount({ customerId }) {
             <AccountType customerId={customerId} />
             <div className="mt-4 flex justify-end space-x-2">
               <Button
-                type="button"
+                type="submit"
                 variant="secondary"
                 className="px-4 py-2"
                 onClick={() => setIsModalOpen(false)}

@@ -3,8 +3,7 @@
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { useSession } from "@/app/(main)/SessionProvider";
-import OptionButton from "@/components/OptionButton";
-import AccountType from "./Accounts";
+import { submitCustomer, submitAccount } from "../app/(main)/create/actions"; // Adjust the import path as necessary
 
 interface CreateFieldProps {
   className?: string;
@@ -15,18 +14,67 @@ interface CreateFieldProps {
     Address: string;
     SSN: string;
     birthday: string;
-    identification: string
+    identification: string;
+    accountType?: string;
   };
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  isSubmitting: boolean;
+  setIsSubmitting: (isSubmitting: boolean) => void;
 }
 
 export default function CreateField({
   className,
   formData,
   handleChange,
+  isSubmitting,
+  setIsSubmitting,
 }: CreateFieldProps) {
   const { user } = useSession();
-  // console.log(AccountType);
+
+  const handleSubmit = async () => {
+    setIsSubmitting(true);
+
+    const birthday = new Date(formData.birthday).toISOString();
+    if (isNaN(Date.parse(birthday))) {
+      console.error("Invalid date format for birthday");
+      setIsSubmitting(false);
+      return;
+    }
+
+    const customerData = {
+      name: formData.CustomerName,
+      email: formData.Email,
+      phone: formData.phoneNumber,
+      address: formData.Address,
+      ssn: formData.SSN,
+      birthday: birthday,
+      identification: formData.identification,
+    };
+
+    try {
+      const newCustomer = await submitCustomer(customerData);
+      console.log("Customer data submitted:", newCustomer);
+
+      const accountType = formData.accountType;
+      if (newCustomer && newCustomer.id && accountType) {
+        const accountNumber = String(Math.floor(Math.random() * 10000000000)).padStart(10, "0");
+        const accountData = {
+          accountType: accountType,
+          accountNumber: String(accountNumber),
+          customerId: newCustomer.id,
+        };
+
+        const newAccount = await submitAccount(accountData);
+        console.log("Account created successfully:", newAccount);
+
+        alert("Customer and account created successfully");
+      }
+    } catch (error) {
+      console.error("Error submitting customer or creating account:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <>
@@ -41,7 +89,7 @@ export default function CreateField({
         />
         <Input
           name="birthday"
-          type="date" // Set the type to date
+          type="date"
           value={formData.birthday}
           onChange={handleChange}
           className="my-7 min-w-full"
@@ -74,16 +122,28 @@ export default function CreateField({
           onChange={handleChange}
           className="my-7 min-w-full"
         />
-         <Input
+        <Input
           name="identification"
           placeholder="identification"
           value={formData.identification}
           onChange={handleChange}
           className="my-7 min-w-full"
         />
-        <div className="my-3 border">
-         <AccountType customerId={""}/>
-        </div>
+        <Input
+          name="accountType"
+          placeholder="Account Type (e.g., Checking, Savings)"
+          value={formData.accountType || ""}
+          onChange={handleChange}
+          className="my-7 min-w-full"
+        />
+        <button
+          type="button"
+          className="mt-4 rounded bg-blue-500 px-4 py-2 text-white"
+          onClick={handleSubmit}
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? "Submitting..." : "Submit"}
+        </button>
       </div>
     </>
   );

@@ -1,83 +1,60 @@
 import { useEffect, useState } from "react";
-import { useSession } from "@/app/(main)/SessionProvider";
-import OptionButton from "./OptionButton";
-import { submitAccount } from "@/app/(main)/create/actions";
 
 interface AccountTypeProps {
-  className?: string;
-  customerId: string;
+  customerId: string | null;
+  onAccountCreated: () => void;
 }
 
-export default function AccountType({
-  className,
-  customerId,
-}: AccountTypeProps) {
-  const { user } = useSession();
-  const [isChecked, setIsChecked] = useState(false);
-  const [accountNumber, setAccountNumber] = useState<string | null>(null);
+export default function AccountType({ customerId, onAccountCreated }: AccountTypeProps) {
   const [accountType, setAccountType] = useState<string>("");
-
-  useEffect(() => {
-    console.log("Current accountType state:", accountType); // Log the current state of accountType
-  }, [accountType]); // This will log whenever accountType changes
-
-  const handleOptionButtonChange = (value: boolean) => {
-    setIsChecked(value);
-    console.log(`Account creation toggled: ${value ? "On" : "Off"}`);
-  };
 
   const generateUniqueAccountNumber = async () => {
     let unique = false;
     let newAccountNumber: string | null = null;
+    const existingAccounts = []; // Simulate existing accounts
 
     while (!unique) {
       newAccountNumber = String(
         Math.floor(Math.random() * 10000000000),
       ).padStart(10, "0");
 
-      const existingAccounts = await fetch("/api/accounts");
-      const accounts = await existingAccounts.json();
-
-      unique = !accounts.some(
+      unique = !existingAccounts.some(
         (account: any) => account.accountNumber === newAccountNumber,
       );
     }
 
-    setAccountNumber(newAccountNumber);
-    console.log(`Generated Account Number: ${newAccountNumber}`);
+    return newAccountNumber;
   };
 
-  useEffect(() => {
-    if (isChecked) {
-      generateUniqueAccountNumber();
-    } else {
-      setAccountNumber(null);
-    }
-  }, [isChecked]);
-
   const handleCreateAccount = async () => {
-    console.log("Account type at the time of submission:", accountType);
-    if (isChecked && accountNumber && accountType) {
+    console.log("handleCreateAccount called");
+    if (accountType && customerId) {
       try {
-        console.log("Account type before submission:", accountType);
-        const newAccount = await submitAccount({
+        console.log("Account type:", accountType);
+        const accountNumber = await generateUniqueAccountNumber();
+        console.log("Generated Account Number:", accountNumber);
+
+        // Simulate account submission
+        const newAccount = {
           accountType: accountType,
           accountNumber: accountNumber,
           customerId: customerId,
-        });
-        console.log("Account created successfully. Details of newAccount:", newAccount);
+        };
+        console.log("Account created successfully:", newAccount);
         alert("Account created successfully");
+        onAccountCreated();
       } catch (error) {
         console.error("Error creating account:", error);
       }
     } else {
-      alert("Please specify the account type and make sure it’s enabled.");
+      console.log("Account type or customer ID missing");
+      alert("Please specify the account type and ensure a customer ID is available.");
     }
   };
 
   return (
-    <>
-      <div className={`my-2 flex flex-col ${className}`}>
+    <div className="account-creation">
+      <div className="my-2 flex flex-col">
         <h2>Account Type:</h2>
         <input
           type="text"
@@ -89,18 +66,10 @@ export default function AccountType({
           }}
           className="rounded border p-2"
         />
+        <button onClick={handleCreateAccount}>
+          Create Account
+        </button>
       </div>
-      <div className="mx-3 inline-block">
-        <p>Enable Account Creation:</p>
-        <OptionButton checked={isChecked} onToggle={handleOptionButtonChange} />
-      </div>
-      <button
-        onClick={handleCreateAccount}
-        disabled={!isChecked || !accountNumber || !accountType}
-      >
-        Create Account
-      </button>
-      {accountNumber && <p>Generated Account Number: {accountNumber}</p>}
-    </>
+    </div>
   );
 }
