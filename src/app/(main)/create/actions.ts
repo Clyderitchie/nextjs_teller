@@ -7,51 +7,8 @@
 // import prisma from "@/lib/prisma";
 // import {
 //   createAccountSchema,
-//   createCustomerSchema,
 //   createIdentificationSchema,
 // } from "@/lib/validations";
-// import { string } from "zod";
-
-// // export async function submitCustomer(input: {
-// //   name: string;
-// //   email: string;
-// //   phone: string;
-// //   address: string;
-// //   ssn: string;
-// //   birthday: string;
-// // }) {
-// //   const { user } = await validateRequest();
-
-// //   if (!user) throw Error("Unauthorized");
-
-// //   try {
-// //     const parsedData = createCustomerSchema.parse(input);
-// //     const { name, email, phone, address, ssn, birthday } = parsedData;
-
-// //     const birthdayDate = new Date(birthday); // Create a Date object
-
-// //     const customerData: any = {
-// //       name: name,
-// //       phoneNumber: phone,
-// //       email: email,
-// //       address: address,
-// //       ssn: ssn,
-// //       birthday: birthdayDate,
-// //       userId: user.id,
-// //       createdAt: new Date(),
-// //     };
-
-// //     const newClient = await prisma.customer.create({
-// //       data: customerData,
-// //     });
-
-// //     console.log("Client created successfully: ", newClient);
-// //     return newClient;
-// //   } catch (error) {
-// //     console.error("Failed to create client: ", error);
-// //     throw new Error("Error creating client");
-// //   }
-// // }
 
 // export async function submitAccount(input: {
 //   accountType: string;

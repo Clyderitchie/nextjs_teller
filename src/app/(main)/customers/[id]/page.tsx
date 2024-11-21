@@ -1,13 +1,15 @@
-// TODO: Refactor the identification 
-
+// TODO: Refactor the identification
 
 import { validateRequest } from "@/auth";
 import NewAccount from "@/components/Accounts/newAccount";
+import { Button } from "@/components/ui/button";
 import ProfileExtra from "@/components/UpdateCustomer/ProfileExtraButton";
 import prisma from "@/lib/prisma";
 import { customerDataSelect } from "@/lib/types";
 import { notFound } from "next/navigation";
 import { cache } from "react";
+import CreateIdentification from "../../create/identification/page";
+import CreateNewAccount from "@/components/CreateNewAccount";
 
 interface PageProps {
   params: { id: string };
@@ -45,6 +47,7 @@ export default async function Page({ params: { id } }: PageProps) {
                 {customer.name}
               </h1>
               <ProfileExtra customerId={customer.id} />
+              {/* <CreateIdentification customerId={customer.id} /> */}
             </div>
             {/*Customer Name Div */}
             <div className="row-span-2 flex flex-col justify-around py-3 md:flex-row">
@@ -63,7 +66,7 @@ export default async function Page({ params: { id } }: PageProps) {
                   <p className="pe-5 ps-2 text-lg font-semibold">
                     Identification Type:{" "}
                   </p>
-                  {/* <p>{customer.identification}</p> */}
+                  {/* <p>{customer.identification.identificationType}</p> */}
                 </div>
               </div>
               {/*Customer ID Info Div */}
@@ -94,7 +97,7 @@ export default async function Page({ params: { id } }: PageProps) {
                   {customer.name} Accounts:
                 </h1>
                 <div className="p-2">
-                  <NewAccount customerId={customer.id}/>
+                 <CreateNewAccount customerId={customer.id}/>
                 </div>
               </div>
               {customer.accounts.map((account) => (

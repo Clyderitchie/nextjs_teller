@@ -117,7 +117,7 @@
 //   );
 // }
 "use client"
-import CreateNewCustomer from "@/components/CreateField";
+import CreateNewCustomer from "@/components/CreateNewCustomer";
 import { useState } from "react";
 
 
