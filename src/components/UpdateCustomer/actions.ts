@@ -1,5 +1,7 @@
 "use server";
 
+// TODO: Refactor the identification 
+
 import { validateRequest } from "@/auth";
 import prisma from "@/lib/prisma";
 import { updateCustomerSchema } from "@/lib/validations";
@@ -31,7 +33,7 @@ export async function updateCustomer(input: {
         email: validatedData.email,
         address: validatedData.address,
         ssn: validatedData.ssn,
-        identification: validatedData.identification,
+        // identification: validatedData.identification,
       },
     });
     console.log("Update of customer: ", updateCustomer);

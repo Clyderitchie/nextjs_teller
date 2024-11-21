@@ -11,7 +11,7 @@ export default function AccountType({ customerId, onAccountCreated }: AccountTyp
   const generateUniqueAccountNumber = async () => {
     let unique = false;
     let newAccountNumber: string | null = null;
-    const existingAccounts = []; // Simulate existing accounts
+    const existingAccounts: any[] = []; // Simulate existing accounts
 
     while (!unique) {
       newAccountNumber = String(

@@ -1,3 +1,6 @@
+// TODO: Refactor the identification 
+
+
 import { validateRequest } from "@/auth";
 import NewAccount from "@/components/Accounts/newAccount";
 import ProfileExtra from "@/components/UpdateCustomer/ProfileExtraButton";
@@ -60,7 +63,7 @@ export default async function Page({ params: { id } }: PageProps) {
                   <p className="pe-5 ps-2 text-lg font-semibold">
                     Identification Type:{" "}
                   </p>
-                  <p>{customer.identification}</p>
+                  {/* <p>{customer.identification}</p> */}
                 </div>
               </div>
               {/*Customer ID Info Div */}

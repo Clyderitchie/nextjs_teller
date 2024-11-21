@@ -25,6 +25,19 @@ export const createAccountSchema = z.object({
   accountNumber: z
     .string()
     .length(10, "Account number must be exactly 10 digits"),
+    interestRate: z.string(),
+  customerId: z.string().cuid(),
+});
+
+export const createIdentificationSchema = z.object({
+  identificationNumber: z
+    .string()
+    .min(12, "Identification Number cannot be empty"),
+  identificationType: requiredString,
+  issuingCountry: requiredString,
+  issuingState: requiredString,
+  issueDate: requiredString,
+  expirationDate: requiredString,
   customerId: z.string().cuid(),
 });
 
@@ -44,7 +57,7 @@ export const createCustomerSchema = z.object({
         "Invalid birthday format. Must be in ISO-8601 format (YYYY-MM-DD).",
     },
   ),
-  identification: requiredString,
+  identification: z.array(createIdentificationSchema).optional(),
   accounts: z.array(createAccountSchema).optional(),
 });
 
@@ -52,9 +65,15 @@ export const createCustomerSchema = z.object({
 export const updateCustomerSchema = z.object({
   name: z.string().min(1, "Name is required").optional(),
   email: z.string().email("Invalid email address").optional(),
-  phone: z.string().regex(/^\d{10}$/, "Phone number must be exactly 10 digits").optional(),
+  phone: z
+    .string()
+    .regex(/^\d{10}$/, "Phone number must be exactly 10 digits")
+    .optional(),
   address: z.string().min(1, "Address is required").optional(),
-  ssn: z.string().regex(/^\d{9}$/, "SSN must be exactly 9 digits").optional(),
+  ssn: z
+    .string()
+    .regex(/^\d{9}$/, "SSN must be exactly 9 digits")
+    .optional(),
   birthday: z
     .string()
     .optional()
@@ -62,19 +81,38 @@ export const updateCustomerSchema = z.object({
       (value) => {
         if (!value) return true; // Allow empty value for optional field
         const date = new Date(value);
-        return !isNaN(date.getTime()) && date.toISOString().startsWith(value); 
+        return !isNaN(date.getTime()) && date.toISOString().startsWith(value);
       },
       {
         message:
           "Invalid birthday format. Must be in ISO-8601 format (YYYY-MM-DD).",
-      }
+      },
     ),
-  identification: z.string().min(1, "Identification is required").optional(),
-  accounts: z.array(z.object({
-    accountType: z.enum(["Checking", "Savings"]),
-    accountNumber: z.string().length(10, "Account number must be exactly 10 digits"),
-    customerId: z.string().cuid(),
-  })).optional(),
+  identification: z.array(
+    z.object({
+      identificationNumber: z
+        .string()
+        .min(12, "Identification Number cannot be empty"),
+      identificationType: requiredString,
+      issuingCountry: requiredString,
+      issuingState: z.string().optional(),
+      issueDate: requiredString,
+      expirationDate: requiredString,
+      customerId: z.string().cuid(),
+    }),
+  ),
+  accounts: z
+    .array(
+      z.object({
+        accountType: z.enum(["Checking", "Savings"]),
+        accountNumber: z
+          .string()
+          .length(10, "Account number must be exactly 10 digits"),
+        interestRate: z.string(),
+        customerId: z.string().cuid(),
+      }),
+    )
+    .optional(),
 });
 
 // Type inference for validation

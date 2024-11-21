@@ -1,100 +1,126 @@
-"use server";
+// "use server";
 
-import { validateRequest } from "@/auth";
-import prisma from "@/lib/prisma";
-import { createAccountSchema, createCustomerSchema } from "@/lib/validations";
-import { string } from "zod";
+// // TODO: Refactor the submitCustomer function, it is throwing an error about identification when creating a new customer
+// // TODO: Refactor submitCustomer: Idea try to refactor so that the identification data is coming from submitIdentification and not submitCustomer. Might have to refactor the createCustomerSchema in Validation file
 
-export async function submitCustomer(input: {
-  name: string;
-  email: string;
-  phone: string;
-  address: string;
-  ssn: string;
-  birthday: string;
-  identification: string;
-}) {
-  const { user } = await validateRequest();
+// import { validateRequest } from "@/auth";
+// import prisma from "@/lib/prisma";
+// import {
+//   createAccountSchema,
+//   createCustomerSchema,
+//   createIdentificationSchema,
+// } from "@/lib/validations";
+// import { string } from "zod";
 
-  if (!user) throw Error("Unauthorized");
+// // export async function submitCustomer(input: {
+// //   name: string;
+// //   email: string;
+// //   phone: string;
+// //   address: string;
+// //   ssn: string;
+// //   birthday: string;
+// // }) {
+// //   const { user } = await validateRequest();
 
-  try {
-    const { name, email, phone, address, ssn, birthday, identification } =
-      createCustomerSchema.parse(input);
+// //   if (!user) throw Error("Unauthorized");
 
-    const birthdayDate = new Date(birthday); // Create a Date object
+// //   try {
+// //     const parsedData = createCustomerSchema.parse(input);
+// //     const { name, email, phone, address, ssn, birthday } = parsedData;
 
-    const newClient = await prisma.customer.create({
-      data: {
-        name: name,
-        phoneNumber: phone,
-        email: email,
-        address: address,
-        ssn: ssn,
-        birthday: birthdayDate,
-        identification: identification,
-        userId: user.id,
-        createdAt: new Date(),
-      },
-    });
-    console.log("Client created successfully: ", newClient);
-    return newClient;
-  } catch (error) {
-    console.error("Failed to create client: ", error);
-    throw new Error("Error creating client");
-  }
-}
+// //     const birthdayDate = new Date(birthday); // Create a Date object
+
+// //     const customerData: any = {
+// //       name: name,
+// //       phoneNumber: phone,
+// //       email: email,
+// //       address: address,
+// //       ssn: ssn,
+// //       birthday: birthdayDate,
+// //       userId: user.id,
+// //       createdAt: new Date(),
+// //     };
+
+// //     const newClient = await prisma.customer.create({
+// //       data: customerData,
+// //     });
+
+// //     console.log("Client created successfully: ", newClient);
+// //     return newClient;
+// //   } catch (error) {
+// //     console.error("Failed to create client: ", error);
+// //     throw new Error("Error creating client");
+// //   }
+// // }
 
 // export async function submitAccount(input: {
 //   accountType: string;
 //   accountNumber: string;
-//   customerId: string; // Accept the customerId from submitCustomer
+//   interestRate: string;
+//   customerId: string;
 // }) {
 //   try {
-//     const { accountType, accountNumber, customerId } =
+//     console.log("Input received in submitAccount:", input); // Log to inspect input values
+
+//     const { accountType, accountNumber, interestRate, customerId } =
 //       createAccountSchema.parse(input);
 
 //     const newAccount = await prisma.account.create({
 //       data: {
 //         accountType: accountType,
-//         accountNumber: String(accountNumber), // Store the account number as an integer
-//         customerId: customerId, // Use the customerId from the created customer
+//         accountNumber: String(accountNumber),
+//         interestRate: interestRate,
+//         customerId: customerId,
 //         createdAt: new Date(),
 //       },
 //     });
 
-//     console.log("Account created successfully: ", newAccount);
+//     console.log("Account created successfully:", newAccount);
 //     return newAccount;
 //   } catch (error) {
-//     console.error("Failed to create account: ", error);
+//     console.error("Failed to create account:", error);
 //     throw new Error("Error creating account");
 //   }
 // }
 
-export async function submitAccount(input: {
-  accountType: string;
-  accountNumber: string;
-  customerId: string;
-}) {
-  try {
-    console.log("Input received in submitAccount:", input); // Log to inspect input values
+// export async function submitIdentification(input: {
+//   identificationNumber: string;
+//   identificationType: string;
+//   issuingCountry: string;
+//   issuingState: string;
+//   issueDate: string;
+//   expirationDate: string;
+//   customerId: string;
+// }) {
+//   try {
+//     console.log("Input received in submitIdentification: ", input); // Logs to inspect input values
 
-    const { accountType, accountNumber, customerId } =
-      createAccountSchema.parse(input);
+//     const {
+//       identificationNumber,
+//       identificationType,
+//       issuingCountry,
+//       issuingState,
+//       issueDate,
+//       expirationDate,
+//       customerId,
+//     } = createIdentificationSchema.parse(input);
 
-    const newAccount = await prisma.account.create({
-      data: {
-        accountType: accountType,
-        accountNumber: String(accountNumber),
-        customerId: customerId,
-        createdAt: new Date(),
-      },
-    });
+//     const newIdentification = await prisma.identification.create({
+//       data: {
+//         identificationNumber: identificationNumber,
+//         identificationType: identificationType,
+//         issuingCountry: issuingCountry,
+//         issuingState: issuingState,
+//         issueDate: issueDate,
+//         expirationDate: expirationDate,
+//         customerId: customerId,
+//       },
+//     });
 
-    console.log("Account created successfully:", newAccount);
-    return newAccount;
-  } catch (error) {
-    console.error("Failed to create account:", error);
-    throw new Error("Error creating account");
-  }
-}
+//     console.log("Identification from validate: ", newIdentification);
+//     return newIdentification;
+//   } catch (error) {
+//     console.error("Failed to create identification:", error);
+//     throw new Error("Error creating identification");
+//   }
+// }
