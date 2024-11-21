@@ -6,13 +6,18 @@ import { useEffect, useState } from "react";
 import { EllipsisVertical } from "lucide-react";
 import DeleteButton from "../DeleteButton";
 import EditButton from "./EditButton";
+import CreateIdentification from "../CreateIdentification";
+
 
 interface ProfileExtraButton {
   className?: string;
   customerId: string;
 }
 
-export default function ProfileExtra({ className, customerId }: ProfileExtraButton) {
+export default function ProfileExtra({
+  className,
+  customerId,
+}: ProfileExtraButton) {
   const { user } = useSession();
   const { theme, setTheme } = useTheme();
   const [tooltipVisible, setTooltipVisible] = useState(false);
@@ -31,9 +36,10 @@ export default function ProfileExtra({ className, customerId }: ProfileExtraButt
         <EllipsisVertical />
       </button>
       {tooltipVisible && (
-        <div className="flex flex-col items-center justify-start absolute right-0 z-10 mt-2 w-40 rounded-lg bg-gray-800 p-3 text-white shadow-lg"> 
+        <div className="absolute right-0 z-10 mt-2 flex w-40 flex-col items-center justify-start rounded-lg bg-gray-800 p-3 text-white shadow-lg">
           <DeleteButton customerId={customerId} />
-         <EditButton customerId={customerId} />
+          <EditButton customerId={customerId} />
+          <CreateIdentification customerId={customerId} />
         </div>
       )}
     </div>

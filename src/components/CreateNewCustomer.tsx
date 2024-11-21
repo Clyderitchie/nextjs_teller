@@ -237,7 +237,7 @@
 import { submitCustomer } from "@/app/(main)/create/customer/actions"; // Adjust the import path as necessary
 import { useSession } from "@/app/(main)/SessionProvider";
 import { Input } from "@/components/ui/input";
-
+import { useRouter } from "next/navigation";
 
 interface CreateCustomerProps {
   className?: string;
@@ -262,6 +262,7 @@ export default function CreateNewCustomer({
   setIsSubmitting,
 }: CreateCustomerProps) {
   const { user } = useSession();
+  const router = useRouter();
 
   const handleSubmit = async () => {
     setIsSubmitting(true);
@@ -285,6 +286,7 @@ export default function CreateNewCustomer({
     try {
       const newCustomer = await submitCustomer(customerData);
       console.log("New customer created: ", newCustomer);
+      router.push(`/customers/${newCustomer.id}`);
     } catch (e) {
       console.error("Error with creating customer: ", e);
     } finally {
@@ -293,59 +295,61 @@ export default function CreateNewCustomer({
   };
   return (
     <>
-      <h2 className="text-center text-2xl">New Customer Information:</h2>
-      <div>
-        <Input
-          name="CustomerName"
-          placeholder="Name"
-          value={formData.CustomerName}
-          onChange={handleChange}
-          className="my-7 min-w-full"
-        />
-        <Input
-          name="birthday"
-          type="date"
-          value={formData.birthday}
-          onChange={handleChange}
-          className="my-7 min-w-full"
-        />
-        <Input
-          name="phoneNumber"
-          placeholder="Phone Number"
-          value={formData.phoneNumber}
-          onChange={handleChange}
-          className="my-7 min-w-full"
-        />
-        <Input
-          name="Email"
-          placeholder="Email"
-          value={formData.Email}
-          onChange={handleChange}
-          className="my-7 min-w-full"
-        />
-        <Input
-          name="Address"
-          placeholder="Address"
-          value={formData.Address}
-          onChange={handleChange}
-          className="my-7 min-w-full"
-        />
-        <Input
-          name="SSN"
-          placeholder="SSN"
-          value={formData.SSN}
-          onChange={handleChange}
-          className="my-7 min-w-full"
-        />
+      <div className={`${className}`}>
+        <h2 className="text-center text-2xl">New Customer Information:</h2>
+        <div>
+          <Input
+            name="CustomerName"
+            placeholder="Name"
+            value={formData.CustomerName}
+            onChange={handleChange}
+            className="my-7 min-w-full"
+          />
+          <Input
+            name="birthday"
+            type="date"
+            value={formData.birthday}
+            onChange={handleChange}
+            className="my-7 min-w-full"
+          />
+          <Input
+            name="phoneNumber"
+            placeholder="Phone Number"
+            value={formData.phoneNumber}
+            onChange={handleChange}
+            className="my-7 min-w-full"
+          />
+          <Input
+            name="Email"
+            placeholder="Email"
+            value={formData.Email}
+            onChange={handleChange}
+            className="my-7 min-w-full"
+          />
+          <Input
+            name="Address"
+            placeholder="Address"
+            value={formData.Address}
+            onChange={handleChange}
+            className="my-7 min-w-full"
+          />
+          <Input
+            name="SSN"
+            placeholder="SSN"
+            value={formData.SSN}
+            onChange={handleChange}
+            className="my-7 min-w-full"
+          />
+        </div>
+        <button
+          type="button"
+          className="mt-4 rounded bg-blue-500 px-4 py-2 text-white"
+          onClick={handleSubmit}
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? "Submitting..." : "Submit"}
+        </button>
       </div>
-      <button
-        type="button"
-        className="mt-4 rounded bg-blue-500 px-4 py-2 text-white"
-        onClick={handleSubmit}
-        disabled={isSubmitting}
-      >
-        {isSubmitting ? "Submitting..." : "Submit"}
-      </button>
     </>
   );
 }

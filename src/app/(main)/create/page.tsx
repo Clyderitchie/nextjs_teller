@@ -3,7 +3,7 @@
 "use client";
 
 import { useState } from "react";
-import CreateField from "@/components/CreateField"; // Adjust the import path as necessary
+import CreateField from "@/components/CreateNewCustomer"; // Adjust the import path as necessary
 
 export default function CreateCustomer() {
   const [formData, setFormData] = useState({
