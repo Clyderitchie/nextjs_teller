@@ -22,6 +22,17 @@ export type UserData = Prisma.UserGetPayload<{
   select: ReturnType<typeof getUserDataSelect>;
 }>;
 
+export const identificationDataSelect = {
+  id: true,
+  customerId: true,
+  identificationNumber: true,
+  identificationType: true,
+  issuingCountry: true,
+  issuingState: true,
+  issueDate: true,
+  expirationDate: true,
+};
+
 export const accountDataSelect = {
   id: true,
   accountNumber: true,
@@ -39,7 +50,9 @@ export const customerDataSelect = {
   phoneNumber: true,
   userId: true,
   createdAt: true,
-  identification: true,
+  identification: {
+    select: identificationDataSelect,
+  },
   accounts: {
     select: accountDataSelect,
   },
@@ -76,10 +89,26 @@ export function getAccountSelect() {
   } satisfies Prisma.AccountSelect;
 }
 
+export function getIdentificationSelect() {
+  return {
+    id: true,
+    identificationNumber: true,
+    identificationType: true,
+    issuingCountry: true,
+    issuingState: true,
+    issueDate: true,
+    expirationDate: true,
+  } satisfies Prisma.IdentificationSelect;
+}
+
+export type IdentificationData = Prisma.IdentificationGetPayload<{
+  select: ReturnType<typeof getIdentificationSelect>;
+}>;
+
 export type AccountData = Prisma.AccountGetPayload<{
   select: ReturnType<typeof getAccountSelect>;
 }>;
 
-export type UpdateCustomerData = Prisma.CustomerUpdateArgs['data'] & {
+export type UpdateCustomerData = Prisma.CustomerUpdateArgs["data"] & {
   select?: ReturnType<typeof getCustomerSelect>;
 };

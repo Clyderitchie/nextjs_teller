@@ -1,3 +1,5 @@
+// TODO: Refactor creation process for new identification and accounts for adding in the interest rate for certain accounts.
+
 "use client";
 
 import { useState } from "react";
@@ -11,8 +13,14 @@ export default function CreateCustomer() {
     Address: "",
     SSN: "",
     birthday: "",
-    identification: "",
+    identificationNumber: "",
+    identificationType: "",
+    issuingCountry: "",
+    issuingState: "",
+    issueDate: "",
+    expirationDate: "",
     accountType: "",
+    interestRate: "",
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);

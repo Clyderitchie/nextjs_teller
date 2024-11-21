@@ -53,3 +53,12 @@ TODO:
     -   Styling
     -   Comments for testing
 -   Deploy and make sure it is up to date with latest commit
+-   CREATE CUSTOMER REFACTOR 
+    -   Break down creation into different parts
+    -   Part 1: Creating customer first name, birthday, ssn, phone, email, and address
+    -   Part 2: Create the identification for that new customer
+    -   Part 3: any accounts the customer may have or need to open
+    -   IDEA here is to have a page for each part and that way once a new customer is created and has an ID it will be passed down to the other pages so everything is linked
+    -   May have to refactor the code in Validations and Actions files for create route. 
+    -   Time being have each part be its on page. 
+    

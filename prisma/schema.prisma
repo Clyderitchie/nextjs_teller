@@ -4,8 +4,8 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
   directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
 
@@ -34,17 +34,17 @@ model Session {
 }
 
 model Customer {
-  id          String    @id @default(cuid())
-  name        String
-  email       String
-  address     String
-  createdAt   DateTime  @default(now())
-  userId      String
-  ssn         String
-  birthday    DateTime
-  phoneNumber String
-  identification String
-  accounts    Account[]
+  id             String           @id @default(cuid())
+  name           String
+  email          String
+  address        String
+  createdAt      DateTime         @default(now())
+  userId         String
+  ssn            String
+  birthday       DateTime
+  phoneNumber    String
+  accounts       Account[]
+  identification Identification[]
 
   @@map("customers")
 }
@@ -55,10 +55,25 @@ model Account {
   customerId    String
   createdAt     DateTime @default(now())
   accountType   String
+  interestRate  String
   customer      Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
   cards         Card[]
 
   @@map("accounts")
+}
+
+model Identification {
+  id                   String   @id @default(cuid())
+  customerId           String
+  identificationNumber String
+  identificationType   String
+  issuingCountry       String
+  issuingState         String
+  issueDate            String
+  expirationDate       String
+  customer             Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+
+  @@map("identifications")
 }
 
 model Card {
