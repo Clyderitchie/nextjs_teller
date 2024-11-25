@@ -1,4 +1,4 @@
-// TODO: Refactor the identification
+// TODO: Refactor the identification so it appears on the front end of the page
 
 import { validateRequest } from "@/auth";
 import NewAccount from "@/components/Accounts/newAccount";

@@ -1,12 +1,26 @@
+// TODO: Refactor this so that it will only appear once the user is on a customers Profile and if not then it is hidden
+
 import { Button } from "@/components/ui/button";
-import { WalletCards, Wallet, Home, Info, Settings, DollarSign, User } from "lucide-react";
+import {
+  WalletCards,
+  Wallet,
+  Home,
+  Info,
+  Settings,
+  DollarSign,
+  User,
+} from "lucide-react";
 import Link from "next/link";
 
 interface MenuBarProps {
   className?: string;
+  customerId: string;
 }
 
-export default function MenuBar({ className }: MenuBarProps) {
+export default function MenuBar({ className, customerId }: MenuBarProps) {
+  const handleAllAccountsClick = () => {
+    console.log("Customer ID:", customerId);
+  };
   return (
     <div className={className}>
       <Button
@@ -27,8 +41,8 @@ export default function MenuBar({ className }: MenuBarProps) {
         asChild
       >
         <Link href="information">
-        <Info/>
-        <span className="hidden lg:inline">Information</span>
+          <Info />
+          <span className="hidden lg:inline">Information</span>
         </Link>
       </Button>
       <Button
@@ -37,49 +51,45 @@ export default function MenuBar({ className }: MenuBarProps) {
         title="Home"
         asChild
       >
-        <Link href={`/accounts`}>
-        <DollarSign/>
+        <Link
+          href={`/customers/${customerId}/accounts`}
+          onClick={handleAllAccountsClick}
+        >
+          <DollarSign />
           <span className="hidden lg:inline">All Accounts</span>
         </Link>
       </Button>
       <Button
-       variant="ghost"
-       className="flex items-center justify-start gap-3"
-       title="Loans"
-       asChild>
-        <Link href='/loans'>
-        <Wallet/>
-        <span className="hidden lg:inline">Loans</span>
+        variant="ghost"
+        className="flex items-center justify-start gap-3"
+        title="Loans"
+        asChild
+      >
+        <Link href="/loans">
+          <Wallet />
+          <span className="hidden lg:inline">Loans</span>
         </Link>
       </Button>
       <Button
-       variant="ghost"
-       className="flex items-center justify-start gap-3"
-       title="Products"
-       asChild>
-        <Link href='/products'>
-        <WalletCards/>
-        <span className="hidden lg:inline">Products</span>
+        variant="ghost"
+        className="flex items-center justify-start gap-3"
+        title="Products"
+        asChild
+      >
+        <Link href="/products">
+          <WalletCards />
+          <span className="hidden lg:inline">Products</span>
         </Link>
       </Button>
       <Button
-       variant="ghost"
-       className="flex items-center justify-start gap-3"
-       title="Settings"
-       asChild>
-        <Link href='/settings'>
-        <Settings/>
-        <span className="hidden lg:inline">Settings</span>
-        </Link>
-      </Button>
-      <Button
-       variant="ghost"
-       className="flex items-center justify-start gap-3"
-       title="Users"
-       asChild>
-        <Link href='/users'>
-        <User/>
-        <span className="hidden lg:inline">Profile</span>
+        variant="ghost"
+        className="flex items-center justify-start gap-3"
+        title="Settings"
+        asChild
+      >
+        <Link href="/settings">
+          <Settings />
+          <span className="hidden lg:inline">Settings</span>
         </Link>
       </Button>
     </div>
