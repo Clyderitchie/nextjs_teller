@@ -8,8 +8,11 @@ import { redirect } from "next/navigation";
 import SessionProvider from "./SessionProvider";
 import ClientLayout from "@/components/ClientLayout";
 
+interface LayoutProps {
+  children: React.ReactNode;
+}
 
-export default async function Layout({ children }: { children: React.ReactNode }) {
+const Layout: React.FC<LayoutProps> = async ({ children }) => {
   const session = await validateRequest(); // Fetches Session
 
   if (!session.user) redirect("/login"); // Checks if user is logged in
@@ -19,5 +22,8 @@ export default async function Layout({ children }: { children: React.ReactNode }
       <ClientLayout>{children}</ClientLayout>
     </SessionProvider>
   ); // Makes Sessions content available to all children so you do not have to fetch there for it.
-}
+};
+
+export default Layout;
+
 
