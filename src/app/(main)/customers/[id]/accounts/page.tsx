@@ -35,25 +35,27 @@ export default async function CustomerAccounts({ params: { id } }: PageProps) {
     <>
       <div className="h-screen w-full bg-card shadow-md">
         {customer ? (
-          <div className="flex items-center justify-between rounded-md border bg-card px-2 py-3 text-start shadow-sm">
-            <h1 className="min-w-fit max-w-fit py-3 text-3xl">
-              {customer.name}
+          <div className="rounded-md border bg-card px-4 py-3 text-start shadow-sm">
+            <h1 className="min-w-fit max-w-fit py-3 text-2xl">
+              {customer.name} Accounts:
             </h1>
+            <div className="flex items-end justify-start border px-5">
+              <h3 className="mb-4 me-20">Account Type: </h3>
+              <h3 className="mb-4 mx-20">Account Number: </h3>
+              <h3 className="mb-4 mx-20">Created At: </h3>
+            </div>
             {customer.accounts.map((account) => (
               <div
                 className="flex flex-row items-center justify-between"
                 key={account.id}
               >
-                <div className="w-1/4 border px-3 py-5">
-                  <h3 className="mb-4">Account Type: </h3>
+                <div className="w-1/4 border-b-2 px-3 py-5">
                   <span>{account.accountType}</span>
                 </div>
-                <div className="w-1/3 border px-3 py-5">
-                  <h3 className="mb-4">Account Number: </h3>
+                <div className="w-1/3 border-b-2 px-3 py-5">
                   <span>{account.accountNumber}</span>
                 </div>
-                <div className="w-1/3 border px-3 py-5">
-                  <h3 className="mb-4">Created At: </h3>
+                <div className="w-1/3 border-b-2 px-3 py-5">
                   {new Date(account.createdAt).toLocaleDateString()}
                 </div>
               </div>

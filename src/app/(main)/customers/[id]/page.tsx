@@ -10,6 +10,7 @@ import { notFound } from "next/navigation";
 import { cache } from "react";
 import CreateIdentification from "../../create/identification/page";
 import CreateNewAccount from "@/components/CreateNewAccount";
+import AllAccounts from "@/components/Accounts/AllAccounts";
 
 interface PageProps {
   params: { id: string };
@@ -97,6 +98,7 @@ export default async function Page({ params: { id } }: PageProps) {
                   {customer.name} Accounts:
                 </h1>
                 <div className="p-2">
+                  <AllAccounts customerId={customer.id} />
                  <CreateNewAccount customerId={customer.id}/>
                 </div>
               </div>
