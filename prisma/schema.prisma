@@ -45,6 +45,7 @@ model Customer {
   phoneNumber    String
   accounts       Account[]
   identification Identification[]
+  Card           Card[]
 
   @@map("customers")
 }
@@ -78,13 +79,15 @@ model Identification {
 
 model Card {
   id         String   @id @default(cuid())
-  debitCard  Boolean
-  creditCard Boolean
-  cardNumber Int
-  expDate    DateTime
+  cardType   String
+  cardNumber String
+  ccv        String
+  expDate    String
   accountId  String
+  customerId String
   createdAt  DateTime @default(now())
   account    Account  @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  customer   Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
 
   @@map("cards")
 }

@@ -32,8 +32,6 @@ CREATE TABLE "accounts" (
 -- CreateTable
 CREATE TABLE "cards" (
     "id" TEXT NOT NULL,
-    "debitCard" BOOLEAN NOT NULL,
-    "creditCard" BOOLEAN NOT NULL,
     "cardNumber" INTEGER NOT NULL,
     "expDate" TIMESTAMP(3) NOT NULL,
     "accountId" TEXT NOT NULL,

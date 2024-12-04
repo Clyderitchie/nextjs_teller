@@ -7,16 +7,19 @@ import { EllipsisVertical } from "lucide-react";
 import DeleteButton from "../DeleteButton";
 import EditButton from "./EditButton";
 import CreateIdentification from "../CreateIdentification";
+import CreateCard from "../CreateNewCard";
 
 
 interface ProfileExtraButton {
   className?: string;
   customerId: string;
+  accountId: string;
 }
 
 export default function ProfileExtra({
   className,
   customerId,
+  accountId,
 }: ProfileExtraButton) {
   const { user } = useSession();
   const { theme, setTheme } = useTheme();
@@ -40,6 +43,7 @@ export default function ProfileExtra({
           <DeleteButton customerId={customerId} />
           <EditButton customerId={customerId} />
           <CreateIdentification customerId={customerId} />
+          <CreateCard customerId={customerId} accountId={accountId} />
         </div>
       )}
     </div>

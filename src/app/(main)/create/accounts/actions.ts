@@ -36,33 +36,3 @@ export async function submitAccount(input: {
     throw new Error("Error creating account");
   }
 }
-
-// export async function submitAccount(input: {
-//       accountType: string;
-//       accountNumber: string;
-//       interestRate: string;
-//       customerId: string;
-//     }) {
-//       try {
-//         console.log("Input received in submitAccount:", input); // Log to inspect input values
-
-//         const { accountType, accountNumber, interestRate, customerId } =
-//           createAccountSchema.parse(input);
-
-//         const newAccount = await prisma.account.create({
-//           data: {
-//             accountType: accountType,
-//             accountNumber: String(accountNumber),
-//             interestRate: interestRate,
-//             customerId: customerId,
-//             createdAt: new Date(),
-//           },
-//         });
-
-//         console.log("Account created successfully:", newAccount);
-//         return newAccount;
-//       } catch (error) {
-//         console.error("Failed to create account:", error);
-//         throw new Error("Error creating account");
-//       }
-//     }

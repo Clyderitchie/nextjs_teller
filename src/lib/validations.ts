@@ -25,9 +25,11 @@ export const createAccountSchema = z.object({
   accountNumber: z
     .string()
     .length(10, "Account number must be exactly 10 digits"),
-    interestRate: z.string(),
+  interestRate: z.string(),
   customerId: z.string().cuid(),
 });
+
+export type CreateAccountValues = z.infer<typeof createAccountSchema>;
 
 export const createIdentificationSchema = z.object({
   identificationNumber: z
@@ -40,6 +42,21 @@ export const createIdentificationSchema = z.object({
   expirationDate: requiredString,
   customerId: z.string().cuid(),
 });
+
+export type CreateIdentificationValues = z.infer<
+  typeof createIdentificationSchema
+>;
+
+export const createCardSchema = z.object({
+  cardType: requiredString,
+  cardNumber: z.string().min(16, "Card number must be 16 characters"),
+  expDate: requiredString,
+  ccv: requiredString,
+  accountId: z.string().cuid(),
+  customerId: z.string().cuid(),
+});
+
+export type CreateCardValue = z.infer<typeof createCardSchema>;
 
 export const createCustomerSchema = z.object({
   name: requiredString,
@@ -60,6 +77,8 @@ export const createCustomerSchema = z.object({
   identification: z.array(createIdentificationSchema).optional(),
   accounts: z.array(createAccountSchema).optional(),
 });
+
+export type CreateCustomerValue = z.infer<typeof createCustomerSchema>;
 
 // Define the fields as optional for partial updates
 export const updateCustomerSchema = z.object({
