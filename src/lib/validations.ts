@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { string, z } from "zod";
 
 const requiredString = z.string().trim().min(1, "Required");
 
@@ -57,6 +57,13 @@ export const createCardSchema = z.object({
 });
 
 export type CreateCardValue = z.infer<typeof createCardSchema>;
+
+export const updateCardSchema = z.object({
+  cardId: z.string(),
+  accountId: z.string(),
+});
+
+export type UpdateCardValue = z.infer<typeof updateCardSchema>;
 
 export const createCustomerSchema = z.object({
   name: requiredString,

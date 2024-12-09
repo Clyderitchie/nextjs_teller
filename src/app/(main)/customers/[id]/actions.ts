@@ -21,6 +21,7 @@ export async function findCustomerById(id: string) {
         createdAt: true,
         birthday: true,
         accounts: true,
+        Card: true,
       },
     });
     console.log("Finding customer from this profile: ", customer);
