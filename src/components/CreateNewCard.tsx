@@ -1,11 +1,5 @@
 "use client";
 
-// TODO: Follow the comments below for new process below
-// Which card type would you like - Button "Debit"
-// Next screen asks - "Which account will this be tied to"
-// Button to create a card
-// Will be all in the same modal and once a question is answered the data is sent to next page in modal and finally on last screen it will be a single button saying submit then a new one will be created
-
 import {
   findAllCustomersAccounts,
   submitCard,
@@ -15,9 +9,19 @@ import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 
+interface Account {
+    id: string;
+    accountType: string;
+    accountNumber: string;
+    customerId: string;
+    createdAt: Date;
+    interestRate: string;
+  }
+
 interface CreateCardProps {
   className?: string;
   customerId: string;
+  accountId: string;
 }
 
 function generateRandomNumber(length: number): string {
@@ -29,7 +33,7 @@ function generateRandomNumber(length: number): string {
   return result;
 }
 
-export default function CreateCard({ className, customerId }: CreateCardProps) {
+export default function CreateCard({ className, customerId, accountId }: CreateCardProps) {
   const { user } = useSession();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
@@ -41,7 +45,7 @@ export default function CreateCard({ className, customerId }: CreateCardProps) {
     accountId: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [accounts, setAccounts] = useState([]);
+  const [accounts, setAccounts] = useState<Account[]>([]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
@@ -74,7 +78,7 @@ export default function CreateCard({ className, customerId }: CreateCardProps) {
     async function loadAccounts() {
       if (customerId) {
         try {
-          const fetchedAccounts = await findAllCustomersAccounts(customerId);
+          const fetchedAccounts: Account[] = await findAllCustomersAccounts(customerId);
           console.log("Fetched accounts: ", fetchedAccounts);
           setAccounts(fetchedAccounts);
         } catch (error) {

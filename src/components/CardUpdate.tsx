@@ -2,8 +2,17 @@
 
 import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
-import { findAllCustomersAccounts, UpdateCard } from "@/app/(main)/create/cards/actions";
+import {
+  findAllCustomersAccounts,
+  UpdateCard,
+} from "@/app/(main)/create/cards/actions";
 
+interface Account {
+  id: string;
+  accountType: string;
+  accountNumber: string;
+  customerId: string;
+}
 
 interface CardUpdateProps {
   className?: string;
@@ -11,20 +20,25 @@ interface CardUpdateProps {
   customerId: string;
 }
 
-export default function CardUpdate({ className, cardId, customerId }: CardUpdateProps) {
+export default function CardUpdate({
+  className,
+  cardId,
+  customerId,
+}: CardUpdateProps) {
   const [formData, setFormData] = useState({
     accountId: "",
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [accounts, setAccounts] = useState([]);
+  const [accounts, setAccounts] = useState<Account[]>([]); // Define the state type
 
   useEffect(() => {
     async function loadAccounts() {
       if (customerId) {
         try {
-          const fetchedAccounts = await findAllCustomersAccounts(customerId);
+          const fetchedAccounts: Account[] =
+            await findAllCustomersAccounts(customerId);
           console.log("Fetched accounts: ", fetchedAccounts);
-          setAccounts(fetchedAccounts);
+          setAccounts(fetchedAccounts || []); // Ensure fallback to empty array if undefined
         } catch (error) {
           console.error("Failed to fetch accounts: ", error);
         }
@@ -35,7 +49,7 @@ export default function CardUpdate({ className, cardId, customerId }: CardUpdate
     }
   }, [customerId, isModalOpen]);
 
-  const handleAccountClick = (account: any) => {
+  const handleAccountClick = (account: Account) => {
     console.log("Account selected: ", account);
     setFormData((prevData) => ({ ...prevData, accountId: account.id }));
   };
@@ -43,7 +57,7 @@ export default function CardUpdate({ className, cardId, customerId }: CardUpdate
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const updateCardData: Record<string, any> = { cardId };
+    const updateCardData = { cardId: cardId, accountId: formData.accountId };
 
     if (formData.accountId) updateCardData.accountId = formData.accountId;
 
@@ -71,9 +85,13 @@ export default function CardUpdate({ className, cardId, customerId }: CardUpdate
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex h-screen items-center justify-center bg-gray-800 bg-opacity-50">
           <div className="w-96 rounded-lg bg-white p-6 shadow-lg">
-            <h2 className="mb-4 text-xl font-semibold">Update account link to card</h2>
+            <h2 className="mb-4 text-xl font-semibold">
+              Update account link to card
+            </h2>
             <div className="my-2 text-center">
-              <h4 className="mb-4 text-xl text-black">Which account will this card be tied to?</h4>
+              <h4 className="mb-4 text-xl text-black">
+                Which account will this card be tied to?
+              </h4>
               <div className="flex flex-wrap justify-center space-x-2">
                 {accounts.map((account) => (
                   <Button
