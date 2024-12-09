@@ -5,7 +5,11 @@ import { Button } from "../ui/button";
 import { updateCustomer } from "./actions";
 import UpdateField from "./UpdateField";
 
-export default function EditButton({ customerId }) {
+interface EditButtonProps {
+  customerId: string;
+}
+
+export default function EditButton({ customerId }: EditButtonProps) {
   const [formData, setFormData] = useState({
     CustomerName: "",
     phoneNumber: "",
@@ -28,7 +32,15 @@ export default function EditButton({ customerId }) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const updateCustomerData: Record<string, any> = { customerId };
+    const updateCustomerData: {
+      customerId: string;
+      name?: string;
+      email?: string;
+      phone?: string;
+      address?: string;
+      ssn?: string;
+      identification?: string;
+    } = { customerId };
 
     // Conditionally add only the fields with non-empty values
     if (formData.CustomerName) updateCustomerData.name = formData.CustomerName;

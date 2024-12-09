@@ -9,7 +9,7 @@ interface NewAccountProps {
   customerId: string;
 }
 
-export default function NewAccount({ customerId }) {
+export default function NewAccount({ customerId }: NewAccountProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleAccountCreation = () => {
@@ -27,7 +27,9 @@ export default function NewAccount({ customerId }) {
         <div className="fixed inset-0 z-50 flex h-screen items-center justify-center bg-gray-800 bg-opacity-50">
           <div className="w-96 rounded-lg bg-white p-6 shadow-lg">
             <h3>New Account: </h3>
-            <AccountType customerId={customerId} />
+            <AccountType customerId={customerId} onAccountCreated={function (): void {
+                          throw new Error("Function not implemented.");
+                      } } />
             <div className="mt-4 flex justify-end space-x-2">
               <Button
                 type="submit"

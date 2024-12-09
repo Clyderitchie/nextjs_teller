@@ -142,7 +142,7 @@ export default async function Page({ params: { id } }: PageProps) {
                   key={card.id}
                 >
                   <div className="border"><CardDeleteButton cardId={card.id}/>
-                  <CardUpdate cardId={card.id} customerId={customer.id} accountId={""}/></div>
+                  <CardUpdate cardId={card.id} customerId={customer.id}/></div>
                   <div className="w-1/4 border px-3 py-5">
                     <h3 className="mb-4">Card Type: </h3>
                     <span>{card.cardType}</span>

@@ -3,6 +3,7 @@
 import { validateRequest } from "@/auth";
 import prisma from "@/lib/prisma";
 import { createCardSchema, updateCardSchema } from "@/lib/validations";
+import { Account } from "@prisma/client";
 
 export async function submitCard(input: {
   cardType: string;
@@ -42,7 +43,7 @@ export async function submitCard(input: {
   }
 }
 
-export async function findAllCustomersAccounts(customerId: string) {
+export async function findAllCustomersAccounts(customerId: string): Promise<Account[]> {
   const { user } = await validateRequest();
 
   if (!user) throw Error("Unauthorized");
@@ -55,12 +56,15 @@ export async function findAllCustomersAccounts(customerId: string) {
         accountType: true,
         accountNumber: true,
         customerId: true,
+        createdAt: true,
+        interestRate: true,
       },
     });
     console.log("Finding all accounts for the customer: ", customerAccounts);
     return customerAccounts;
   } catch (error) {
     console.error("Failed to find any accounts: ", error);
+    return [];
   }
 }
 
