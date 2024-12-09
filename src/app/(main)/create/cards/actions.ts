@@ -2,7 +2,7 @@
 
 import { validateRequest } from "@/auth";
 import prisma from "@/lib/prisma";
-import { createCardSchema } from "@/lib/validations";
+import { createCardSchema, updateCardSchema } from "@/lib/validations";
 
 export async function submitCard(input: {
   cardType: string;
@@ -62,4 +62,50 @@ export async function findAllCustomersAccounts(customerId: string) {
   } catch (error) {
     console.error("Failed to find any accounts: ", error);
   }
+}
+
+export async function DeleteCard(cardId: string) {
+    try {
+        const card = await prisma.card.findUnique({
+            where: { id: cardId},
+        })
+
+        if (!card) {
+            throw new Error("Card not found")
+        }
+
+        await prisma.card.delete({
+            where: {
+                id: cardId,
+            },
+        });
+    } catch (error) {
+        console.error("Error running DeleteCard: ", error);
+        throw new Error("Failed to delete card");
+    }
+}
+
+export async function UpdateCard(input: {
+    cardId: string;
+    accountId: string;
+}) {
+    const { user } = await validateRequest();
+
+    if (!user) throw Error("Unauthorized");
+    
+    try {
+        const validatedData = updateCardSchema.parse(input);
+
+        const updateCard = await prisma.card.update({
+            where: { id: validatedData.cardId},
+            data: {
+                accountId: validatedData.accountId,
+            },
+        });
+        console.log("Update of card is returning this: ", updateCard)
+        return updateCard;
+    } catch (error) {
+        console.error("Error updating card in the actions for this: ", error);
+        throw new Error("Error with card update");
+    }
 }

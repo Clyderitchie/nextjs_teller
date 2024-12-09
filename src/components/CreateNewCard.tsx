@@ -73,9 +73,13 @@ export default function CreateCard({ className, customerId }: CreateCardProps) {
   useEffect(() => {
     async function loadAccounts() {
       if (customerId) {
-        const fetchedAccounts = await findAllCustomersAccounts(customerId);
-        console.log("Fetched accounts: ", fetchedAccounts);
-        setAccounts(fetchedAccounts);
+        try {
+          const fetchedAccounts = await findAllCustomersAccounts(customerId);
+          console.log("Fetched accounts: ", fetchedAccounts);
+          setAccounts(fetchedAccounts);
+        } catch (error) {
+          console.error("Failed to fetch accounts: ", error);
+        }
       }
     }
     loadAccounts();

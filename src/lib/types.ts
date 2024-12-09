@@ -41,6 +41,17 @@ export const accountDataSelect = {
   accountType: true,
 } satisfies Prisma.AccountSelect;
 
+export const cardDataSelect = {
+  id: true,
+  cardType: true,
+  cardNumber: true,
+  ccv: true,
+  expDate: true,
+  accountId: true,
+  customerId: true,
+  createdAt: true,
+} satisfies Prisma.CardSelect;
+
 export const customerDataSelect = {
   id: true,
   name: true,
@@ -55,6 +66,9 @@ export const customerDataSelect = {
   },
   accounts: {
     select: accountDataSelect,
+  },
+  Card: {
+    select: cardDataSelect,
   },
 } satisfies Prisma.CustomerSelect;
 
@@ -72,11 +86,31 @@ export function getCustomerSelect() {
     accounts: {
       select: accountDataSelect,
     },
+    Card: {
+      select: cardDataSelect
+    }
   } satisfies Prisma.CustomerSelect;
 }
 
 export type CustomerData = Prisma.CustomerGetPayload<{
   select: ReturnType<typeof getCustomerSelect>;
+}>;
+
+export function getCardSelect() {
+  return {
+    id: true,
+    cardType: true,
+    cardNumber: true,
+    ccv: true,
+    expDate: true,
+    accountId: true,
+    customerId: true,
+    createdAt: true,
+  };
+}
+
+export type CardData = Prisma.CardGetPayload<{
+  select: ReturnType<typeof getCardSelect>;
 }>;
 
 export function getAccountSelect() {

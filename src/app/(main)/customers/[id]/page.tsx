@@ -1,4 +1,4 @@
-// TODO: Refactor the identification so it appears on the front end of the page
+// TODO: Restyle  the layout of this page big time. 
 
 import { validateRequest } from "@/auth";
 import NewAccount from "@/components/Accounts/newAccount";
@@ -11,6 +11,8 @@ import { cache } from "react";
 import CreateIdentification from "../../create/identification/page";
 import CreateNewAccount from "@/components/CreateNewAccount";
 import AllAccounts from "@/components/Accounts/AllAccounts";
+import CardDeleteButton from "@/components/CardDelete";
+import CardUpdate from "@/components/CardUpdate";
 
 interface PageProps {
   params: { id: string };
@@ -25,8 +27,9 @@ const getCustomer = cache(async (id: string) => {
   });
 
   if (!customer) notFound();
-
+  console.log("Customer from [id]: ", customer)
   return customer;
+  
 });
 
 export default async function Page({ params: { id } }: PageProps) {
@@ -47,7 +50,7 @@ export default async function Page({ params: { id } }: PageProps) {
               <h1 className="min-w-fit max-w-fit py-3 text-3xl">
                 {customer.name}
               </h1>
-              <ProfileExtra customerId={customer.id} />
+              <ProfileExtra customerId={customer.id} accountId={""} />
               {/* <CreateIdentification customerId={customer.id} /> */}
             </div>
             {/*Customer Name Div */}
@@ -67,6 +70,11 @@ export default async function Page({ params: { id } }: PageProps) {
                   <p className="pe-5 ps-2 text-lg font-semibold">
                     Identification Type:{" "}
                   </p>
+                  {customer.identification.map((ids => (
+                    <div key={ids.id}>
+                      {ids.identificationType}
+                    </div>
+                  )))}
                   {/* <p>{customer.identification.identificationType}</p> */}
                 </div>
               </div>
@@ -118,6 +126,34 @@ export default async function Page({ params: { id } }: PageProps) {
                   <div className="w-1/3 border px-3 py-5">
                     <h3 className="mb-4">Created At: </h3>
                     {new Date(account.createdAt).toLocaleDateString()}
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="rounded-md border bg-card px-4 my-3 py-3 text-start shadow-sm">
+              <div className="flex justify-between">
+                <h1 className="min-w-fit max-w-fit py-3 text-2xl">
+                  {customer.name} Cards:
+                </h1>
+              </div>
+              {customer.Card.map((card) => (
+                <div
+                  className="flex flex-row items-center justify-between"
+                  key={card.id}
+                >
+                  <div className="border"><CardDeleteButton cardId={card.id}/>
+                  <CardUpdate cardId={card.id} customerId={customer.id} accountId={""}/></div>
+                  <div className="w-1/4 border px-3 py-5">
+                    <h3 className="mb-4">Card Type: </h3>
+                    <span>{card.cardType}</span>
+                  </div>
+                  <div className="w-1/3 border px-3 py-5">
+                    <h3 className="mb-4">Card Number: </h3>
+                    <span>{card.cardNumber}</span>
+                  </div>
+                  <div className="w-1/3 border px-3 py-5">
+                    <h3 className="mb-4">Exp Date: </h3>
+                    <span>{card.expDate}</span>
                   </div>
                 </div>
               ))}
