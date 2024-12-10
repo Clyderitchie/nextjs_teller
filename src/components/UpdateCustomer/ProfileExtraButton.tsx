@@ -7,7 +7,7 @@ import { EllipsisVertical } from "lucide-react";
 import DeleteButton from "../DeleteButton";
 import EditButton from "./EditButton";
 import CreateIdentification from "../CreateIdentification";
-import CreateCard from "../CreateNewCard";
+import CreateCard from "../Cards/CreateNewCard";
 
 
 interface ProfileExtraButton {

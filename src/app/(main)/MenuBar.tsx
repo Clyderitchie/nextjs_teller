@@ -51,13 +51,6 @@ export default function MenuBar({ className, customerId }: MenuBarProps) {
         title="Home"
         asChild
       >
-        <Link
-          href={`/customers/${customerId}/accounts`}
-          onClick={handleAllAccountsClick}
-        >
-          <DollarSign />
-          <span className="hidden lg:inline">All Accounts</span>
-        </Link>
       </Button>
       <Button
         variant="ghost"

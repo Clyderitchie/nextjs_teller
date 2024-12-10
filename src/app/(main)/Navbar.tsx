@@ -10,7 +10,7 @@ export default function Navbar() {
         <Link href="/" className="text-2xl font-bold text-primary">
           Banker Solutions
         </Link>
-        <SearchField />
+       <div className="mx-52 w-96"> <SearchField /></div>
         <UserButton className="sm:ms-auto" />
         <CreateButton />
       </div>

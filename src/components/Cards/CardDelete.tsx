@@ -4,7 +4,7 @@ import { DeleteCard } from "@/app/(main)/create/cards/actions";
 import { useSession } from "@/app/(main)/SessionProvider";
 import { useTheme } from "next-themes";
 import { useState } from "react";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 
 interface CardDeleteProps {
   className?: string;

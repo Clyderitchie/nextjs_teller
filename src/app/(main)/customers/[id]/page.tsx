@@ -1,4 +1,4 @@
-// TODO: Restyle  the layout of this page big time. 
+// TODO: Restyle  the layout of this page big time.
 
 import { validateRequest } from "@/auth";
 import NewAccount from "@/components/Accounts/newAccount";
@@ -11,8 +11,11 @@ import { cache } from "react";
 import CreateIdentification from "../../create/identification/page";
 import CreateNewAccount from "@/components/CreateNewAccount";
 import AllAccounts from "@/components/Accounts/AllAccounts";
-import CardDeleteButton from "@/components/CardDelete";
-import CardUpdate from "@/components/CardUpdate";
+import CardDeleteButton from "@/components/Cards/CardDelete";
+import CardUpdate from "@/components/Cards/CardUpdate";
+import CardExtraButton from "@/components/Cards/CardExtraButton";
+import AllCards from "./[card.id]/page";
+import CreateCard from "@/components/Cards/CreateNewCard";
 
 interface PageProps {
   params: { id: string };
@@ -27,9 +30,8 @@ const getCustomer = cache(async (id: string) => {
   });
 
   if (!customer) notFound();
-  console.log("Customer from [id]: ", customer)
+  console.log("Customer from [id]: ", customer);
   return customer;
-  
 });
 
 export default async function Page({ params: { id } }: PageProps) {
@@ -43,7 +45,7 @@ export default async function Page({ params: { id } }: PageProps) {
 
   return (
     <>
-      <div className="h-screen w-full bg-card p-4 shadow-md">
+      <div className="h-screen w-full p-4">
         {customer ? (
           <div>
             <div className="flex items-center justify-between rounded-md border bg-card px-2 py-3 text-start shadow-sm">
@@ -54,8 +56,8 @@ export default async function Page({ params: { id } }: PageProps) {
               {/* <CreateIdentification customerId={customer.id} /> */}
             </div>
             {/*Customer Name Div */}
-            <div className="row-span-2 flex flex-col justify-around py-3 md:flex-row">
-              <div className="mx-1 my-4 w-1/2 max-w-full rounded-md border bg-card px-2 py-3 shadow-md">
+            <div className="row-span-2 flex flex-col justify-around bg-card py-3 md:flex-row">
+              <div className="mx-1 my-4 w-1/2 max-w-full rounded-md border px-2 py-3 shadow-md">
                 <div className="my-2 flex flex-row items-baseline py-1">
                   <p className="pe-5 ps-2 text-lg font-semibold">Birthday: </p>
                   <p> {new Date(customer.birthday).toLocaleDateString()}</p>
@@ -70,11 +72,9 @@ export default async function Page({ params: { id } }: PageProps) {
                   <p className="pe-5 ps-2 text-lg font-semibold">
                     Identification Type:{" "}
                   </p>
-                  {customer.identification.map((ids => (
-                    <div key={ids.id}>
-                      {ids.identificationType}
-                    </div>
-                  )))}
+                  {customer.identification.map((ids) => (
+                    <div key={ids.id}>{ids.identificationType}</div>
+                  ))}
                   {/* <p>{customer.identification.identificationType}</p> */}
                 </div>
               </div>
@@ -100,63 +100,74 @@ export default async function Page({ params: { id } }: PageProps) {
               </div>
               {/*Customer Info Div */}
             </div>
-            <div className="rounded-md border bg-card px-4 py-3 text-start shadow-sm">
+            <div className="rounded-md bg-card px-4 py-3 text-start shadow-md">
               <div className="flex justify-between">
                 <h1 className="min-w-fit max-w-fit py-3 text-2xl">
                   {customer.name} Accounts:
                 </h1>
-                <div className="p-2">
+                <div className="mx-20 flex w-64 items-center justify-between p-2">
                   <AllAccounts customerId={customer.id} />
-                 <CreateNewAccount customerId={customer.id}/>
-                </div>
+                  <CreateNewAccount customerId={customer.id} />
+                </div>{" "}
+                {/*TODO: Refactor allAccounts so a modal opens up with accounts and their numbers which are links to the full page of that account that gives full details */}
               </div>
-              {customer.accounts.map((account) => (
+              {/* {customer.accounts.map((account) => (
                 <div
                   className="flex flex-row items-center justify-between"
                   key={account.id}
                 >
-                  <div className="w-1/4 border px-3 py-5">
+                  <div className="w-1/4 px-3 py-5">
                     <h3 className="mb-4">Account Type: </h3>
                     <span>{account.accountType}</span>
                   </div>
-                  <div className="w-1/3 border px-3 py-5">
+                  <div className="w-1/3 px-3 py-5">
                     <h3 className="mb-4">Account Number: </h3>
                     <span>{account.accountNumber}</span>
                   </div>
-                  <div className="w-1/3 border px-3 py-5">
+                  <div className="w-1/3 px-3 py-5">
                     <h3 className="mb-4">Created At: </h3>
                     {new Date(account.createdAt).toLocaleDateString()}
                   </div>
                 </div>
-              ))}
+              ))} */}
             </div>
-            <div className="rounded-md border bg-card px-4 my-3 py-3 text-start shadow-sm">
+            {/* Cards Info Div below */}
+            {/* TODO: Refactor to make same layout as accounts. Add new card function to this div and remove from customer info div */}
+            <div className="my-3 rounded-md bg-card px-4 py-3 text-start shadow-md">
               <div className="flex justify-between">
                 <h1 className="min-w-fit max-w-fit py-3 text-2xl">
                   {customer.name} Cards:
                 </h1>
+                <div className="mx-20 flex w-64 items-center justify-between p-2">
+                  <AllCards customerId={customer.id} />
+                  <CreateCard customerId={customer.id} accountId={""}/>
+                </div>
               </div>
-              {customer.Card.map((card) => (
+              {/* {customer.Card.map((card) => (
                 <div
                   className="flex flex-row items-center justify-between"
                   key={card.id}
                 >
-                  <div className="border"><CardDeleteButton cardId={card.id}/>
-                  <CardUpdate cardId={card.id} customerId={customer.id}/></div>
-                  <div className="w-1/4 border px-3 py-5">
+                  <div className="">
+                    <CardExtraButton
+                      cardId={card.id}
+                      customerId={customer.id}
+                    />
+                  </div>
+                  <div className="w-1/4 px-3 py-5">
                     <h3 className="mb-4">Card Type: </h3>
                     <span>{card.cardType}</span>
                   </div>
-                  <div className="w-1/3 border px-3 py-5">
+                  <div className="w-1/3 px-3 py-5">
                     <h3 className="mb-4">Card Number: </h3>
                     <span>{card.cardNumber}</span>
                   </div>
-                  <div className="w-1/3 border px-3 py-5">
+                  <div className="w-1/3 px-3 py-5">
                     <h3 className="mb-4">Exp Date: </h3>
                     <span>{card.expDate}</span>
                   </div>
                 </div>
-              ))}
+              ))} */}
             </div>
           </div>
         ) : (
