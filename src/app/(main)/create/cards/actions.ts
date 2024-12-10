@@ -3,7 +3,7 @@
 import { validateRequest } from "@/auth";
 import prisma from "@/lib/prisma";
 import { createCardSchema, updateCardSchema } from "@/lib/validations";
-import { Account } from "@prisma/client";
+import { Account, Card } from "@prisma/client";
 
 export async function submitCard(input: {
   cardType: string;
@@ -58,12 +58,40 @@ export async function findAllCustomersAccounts(customerId: string): Promise<Acco
         customerId: true,
         createdAt: true,
         interestRate: true,
+        balance: true,
       },
     });
     console.log("Finding all accounts for the customer: ", customerAccounts);
     return customerAccounts;
   } catch (error) {
     console.error("Failed to find any accounts: ", error);
+    return [];
+  }
+}
+
+export async function findAllCards(customerId: string): Promise<Card[]> {
+    const { user } = await validateRequest();
+
+  if (!user) throw Error("Unauthorized");
+
+  try {
+    const customerCards = await prisma.card.findMany({
+        where: { customerId },
+        select: {
+            id: true,
+            cardType: true,
+            cardNumber: true,
+            ccv: true,
+            createdAt: true,
+            expDate: true,
+            customerId: true,
+            accountId: true
+        },
+    });
+    console.log("Cards found successfully: ", customerCards)
+    return customerCards;
+  } catch (error) {
+    console.error("Failed to find any cards: ", error);
     return [];
   }
 }

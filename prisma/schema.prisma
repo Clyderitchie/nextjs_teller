@@ -57,6 +57,7 @@ model Account {
   createdAt     DateTime @default(now())
   accountType   String
   interestRate  String
+  balance       String
   customer      Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
   cards         Card[]
 

@@ -39,6 +39,7 @@ export const accountDataSelect = {
   customerId: true,
   createdAt: true,
   accountType: true,
+  balance: true,
 } satisfies Prisma.AccountSelect;
 
 export const cardDataSelect = {
@@ -120,6 +121,7 @@ export function getAccountSelect() {
     customerId: true,
     createdAt: true,
     accountType: true,
+    balance: true,
   } satisfies Prisma.AccountSelect;
 }
 

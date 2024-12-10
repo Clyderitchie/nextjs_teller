@@ -17,7 +17,7 @@ export async function submitAccount(input: {
   try {
     console.log("Input received in submitAccount", input);
 
-    const { accountType, accountNumber, interestRate, customerId } =
+    const { accountType, accountNumber, interestRate, customerId, balance } =
       createAccountSchema.parse(input);
 
     const newAccountData = await prisma.account.create({
@@ -27,6 +27,7 @@ export async function submitAccount(input: {
         interestRate: interestRate,
         customerId: customerId,
         createdAt: new Date(),
+        balance: "0",
       },
     });
     console.log("Account from validate: ", newAccountData);

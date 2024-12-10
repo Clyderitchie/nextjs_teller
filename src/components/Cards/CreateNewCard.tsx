@@ -6,8 +6,8 @@ import {
 } from "@/app/(main)/create/cards/actions";
 import { useSession } from "@/app/(main)/SessionProvider";
 import { useEffect, useState } from "react";
-import { Button } from "./ui/button";
-import { Input } from "./ui/input";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
 
 interface Account {
     id: string;

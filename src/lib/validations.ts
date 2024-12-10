@@ -27,6 +27,7 @@ export const createAccountSchema = z.object({
     .length(10, "Account number must be exactly 10 digits"),
   interestRate: z.string(),
   customerId: z.string().cuid(),
+  balance: z.string().optional()
 });
 
 export type CreateAccountValues = z.infer<typeof createAccountSchema>;
