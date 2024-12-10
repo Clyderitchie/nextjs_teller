@@ -58,6 +58,7 @@ export async function findAllCustomersAccounts(customerId: string): Promise<Acco
         customerId: true,
         createdAt: true,
         interestRate: true,
+        balance: true,
       },
     });
     console.log("Finding all accounts for the customer: ", customerAccounts);
