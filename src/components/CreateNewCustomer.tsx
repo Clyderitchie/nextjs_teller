@@ -1,8 +1,6 @@
 "use client";
 
-// TODO: Bring in action file to handle creating a new customer for data below only
-
-import { submitCustomer } from "@/app/(main)/create/customer/actions"; // Adjust the import path as necessary
+import { submitCustomer } from "@/app/(main)/create/customer/actions"; 
 import { useSession } from "@/app/(main)/SessionProvider";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";

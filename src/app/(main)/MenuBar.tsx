@@ -1,5 +1,3 @@
-// TODO: Refactor this so that it will only appear once the user is on a customers Profile and if not then it is hidden
-
 import { Button } from "@/components/ui/button";
 import {
   WalletCards,
@@ -50,8 +48,7 @@ export default function MenuBar({ className, customerId }: MenuBarProps) {
         className="flex items-center justify-start gap-3"
         title="Home"
         asChild
-      >
-      </Button>
+      ></Button>
       <Button
         variant="ghost"
         className="flex items-center justify-start gap-3"

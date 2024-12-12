@@ -1,5 +1,3 @@
-// TODO: Restyle  the layout of this page big time.
-
 import { validateRequest } from "@/auth";
 import NewAccount from "@/components/Accounts/newAccount";
 import { Button } from "@/components/ui/button";
@@ -108,31 +106,10 @@ export default async function Page({ params: { id } }: PageProps) {
                 <div className="mx-20 flex w-64 items-center justify-between p-2">
                   <AllAccounts customerId={customer.id} />
                   <CreateNewAccount customerId={customer.id} />
-                </div>{" "}
-                {/*TODO: Refactor allAccounts so a modal opens up with accounts and their numbers which are links to the full page of that account that gives full details */}
-              </div>
-              {/* {customer.accounts.map((account) => (
-                <div
-                  className="flex flex-row items-center justify-between"
-                  key={account.id}
-                >
-                  <div className="w-1/4 px-3 py-5">
-                    <h3 className="mb-4">Account Type: </h3>
-                    <span>{account.accountType}</span>
-                  </div>
-                  <div className="w-1/3 px-3 py-5">
-                    <h3 className="mb-4">Account Number: </h3>
-                    <span>{account.accountNumber}</span>
-                  </div>
-                  <div className="w-1/3 px-3 py-5">
-                    <h3 className="mb-4">Created At: </h3>
-                    {new Date(account.createdAt).toLocaleDateString()}
-                  </div>
                 </div>
-              ))} */}
+              </div>
             </div>
             {/* Cards Info Div below */}
-            {/* TODO: Refactor to make same layout as accounts. Add new card function to this div and remove from customer info div */}
             <div className="my-3 rounded-md bg-card px-4 py-3 text-start shadow-md">
               <div className="flex justify-between">
                 <h1 className="min-w-fit max-w-fit py-3 text-2xl">
@@ -140,7 +117,7 @@ export default async function Page({ params: { id } }: PageProps) {
                 </h1>
                 <div className="mx-20 flex w-64 items-center justify-between p-2">
                   <AllCards customerId={customer.id} />
-                  <CreateCard customerId={customer.id} accountId={""}/>
+                  <CreateCard customerId={customer.id} accountId={""} />
                 </div>
               </div>
               {/* {customer.Card.map((card) => (

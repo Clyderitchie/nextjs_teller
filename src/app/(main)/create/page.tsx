@@ -1,9 +1,7 @@
-// TODO: Refactor creation process for new identification and accounts for adding in the interest rate for certain accounts.
-
 "use client";
 
 import { useState } from "react";
-import CreateField from "@/components/CreateNewCustomer"; // Adjust the import path as necessary
+import CreateField from "@/components/CreateNewCustomer";
 
 export default function CreateCustomer() {
   const [formData, setFormData] = useState({
