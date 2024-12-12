@@ -9,7 +9,6 @@ import EditButton from "./EditButton";
 import CreateIdentification from "../CreateIdentification";
 import CreateCard from "../Cards/CreateNewCard";
 
-
 interface ProfileExtraButton {
   className?: string;
   customerId: string;
@@ -43,7 +42,6 @@ export default function ProfileExtra({
           <DeleteButton customerId={customerId} />
           <EditButton customerId={customerId} />
           <CreateIdentification customerId={customerId} />
-          <CreateCard customerId={customerId} accountId={accountId} />
         </div>
       )}
     </div>

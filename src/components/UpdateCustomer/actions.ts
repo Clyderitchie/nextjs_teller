@@ -1,7 +1,5 @@
 "use server";
 
-// TODO: Refactor the identification 
-
 import { validateRequest } from "@/auth";
 import prisma from "@/lib/prisma";
 import { updateCustomerSchema } from "@/lib/validations";

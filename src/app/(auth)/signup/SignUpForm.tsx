@@ -1,7 +1,5 @@
 //  Client Component always needs it's own file
 
-// TODO: I am at 2:08 adding password toggle in video
-
 "use client";
 
 import { SignUpValues, signUpSchema } from "@/lib/validations";
