@@ -37,3 +37,28 @@ export async function submitAccount(input: {
     throw new Error("Error creating account");
   }
 }
+
+export async function getAccountSummary(accountId: string) {
+  const { user } = await validateRequest();
+
+  if (!user) throw Error("Unauthorized");
+
+  try {
+    const customerAccount = await prisma.account.findUnique({
+      where: { id: accountId },
+      select: {
+        id: true,
+        accountType: true,
+        accountNumber: true,
+        customerId: true,
+        createdAt: true,
+        interestRate: true,
+        balance: true,
+      },
+    });
+    console.log("successfully found account");
+    return customerAccount;
+  } catch (error) {
+    console.error("Failed to find account: ", error);
+  }
+}
