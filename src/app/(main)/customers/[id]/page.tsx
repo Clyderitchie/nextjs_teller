@@ -12,8 +12,9 @@ import AllAccounts from "@/components/Accounts/AllAccounts";
 import CardDeleteButton from "@/components/Cards/CardDelete";
 import CardUpdate from "@/components/Cards/CardUpdate";
 import CardExtraButton from "@/components/Cards/CardExtraButton";
-import AllCards from "./[card.id]/page";
+
 import CreateCard from "@/components/Cards/CreateNewCard";
+import AllCards from "@/components/Cards/AllCards";
 
 interface PageProps {
   params: { id: string };
@@ -101,7 +102,7 @@ export default async function Page({ params: { id } }: PageProps) {
             <div className="rounded-md bg-card px-4 py-3 text-start shadow-md">
               <div className="flex justify-between">
                 <h1 className="min-w-fit max-w-fit py-3 text-2xl">
-                  {customer.name} Accounts:
+                  Accounts:
                 </h1>
                 <div className="mx-20 flex w-64 items-center justify-between p-2">
                   <AllAccounts customerId={customer.id} />
@@ -113,38 +114,13 @@ export default async function Page({ params: { id } }: PageProps) {
             <div className="my-3 rounded-md bg-card px-4 py-3 text-start shadow-md">
               <div className="flex justify-between">
                 <h1 className="min-w-fit max-w-fit py-3 text-2xl">
-                  {customer.name} Cards:
+                 Cards:
                 </h1>
                 <div className="mx-20 flex w-64 items-center justify-between p-2">
                   <AllCards customerId={customer.id} />
                   <CreateCard customerId={customer.id} accountId={""} />
                 </div>
               </div>
-              {/* {customer.Card.map((card) => (
-                <div
-                  className="flex flex-row items-center justify-between"
-                  key={card.id}
-                >
-                  <div className="">
-                    <CardExtraButton
-                      cardId={card.id}
-                      customerId={customer.id}
-                    />
-                  </div>
-                  <div className="w-1/4 px-3 py-5">
-                    <h3 className="mb-4">Card Type: </h3>
-                    <span>{card.cardType}</span>
-                  </div>
-                  <div className="w-1/3 px-3 py-5">
-                    <h3 className="mb-4">Card Number: </h3>
-                    <span>{card.cardNumber}</span>
-                  </div>
-                  <div className="w-1/3 px-3 py-5">
-                    <h3 className="mb-4">Exp Date: </h3>
-                    <span>{card.expDate}</span>
-                  </div>
-                </div>
-              ))} */}
             </div>
           </div>
         ) : (

@@ -43,7 +43,9 @@ export async function submitCard(input: {
   }
 }
 
-export async function findAllCustomersAccounts(customerId: string): Promise<Account[]> {
+export async function findAllCustomersAccounts(
+  customerId: string,
+): Promise<Account[]> {
   const { user } = await validateRequest();
 
   if (!user) throw Error("Unauthorized");
@@ -70,25 +72,25 @@ export async function findAllCustomersAccounts(customerId: string): Promise<Acco
 }
 
 export async function findAllCards(customerId: string): Promise<Card[]> {
-    const { user } = await validateRequest();
+  const { user } = await validateRequest();
 
   if (!user) throw Error("Unauthorized");
 
   try {
     const customerCards = await prisma.card.findMany({
-        where: { customerId },
-        select: {
-            id: true,
-            cardType: true,
-            cardNumber: true,
-            ccv: true,
-            createdAt: true,
-            expDate: true,
-            customerId: true,
-            accountId: true
-        },
+      where: { customerId },
+      select: {
+        id: true,
+        cardType: true,
+        cardNumber: true,
+        ccv: true,
+        createdAt: true,
+        expDate: true,
+        customerId: true,
+        accountId: true,
+      },
     });
-    console.log("Cards found successfully: ", customerCards)
+    console.log("Cards found successfully: ", customerCards);
     return customerCards;
   } catch (error) {
     console.error("Failed to find any cards: ", error);
@@ -97,47 +99,69 @@ export async function findAllCards(customerId: string): Promise<Card[]> {
 }
 
 export async function DeleteCard(cardId: string) {
-    try {
-        const card = await prisma.card.findUnique({
-            where: { id: cardId},
-        })
+  try {
+    const card = await prisma.card.findUnique({
+      where: { id: cardId },
+    });
 
-        if (!card) {
-            throw new Error("Card not found")
-        }
-
-        await prisma.card.delete({
-            where: {
-                id: cardId,
-            },
-        });
-    } catch (error) {
-        console.error("Error running DeleteCard: ", error);
-        throw new Error("Failed to delete card");
+    if (!card) {
+      throw new Error("Card not found");
     }
+
+    await prisma.card.delete({
+      where: {
+        id: cardId,
+      },
+    });
+  } catch (error) {
+    console.error("Error running DeleteCard: ", error);
+    throw new Error("Failed to delete card");
+  }
 }
 
-export async function UpdateCard(input: {
-    cardId: string;
-    accountId: string;
-}) {
-    const { user } = await validateRequest();
+export async function UpdateCard(input: { cardId: string; accountId: string }) {
+  const { user } = await validateRequest();
 
-    if (!user) throw Error("Unauthorized");
-    
-    try {
-        const validatedData = updateCardSchema.parse(input);
+  if (!user) throw Error("Unauthorized");
 
-        const updateCard = await prisma.card.update({
-            where: { id: validatedData.cardId},
-            data: {
-                accountId: validatedData.accountId,
-            },
-        });
-        console.log("Update of card is returning this: ", updateCard)
-        return updateCard;
-    } catch (error) {
-        console.error("Error updating card in the actions for this: ", error);
-        throw new Error("Error with card update");
-    }
+  try {
+    const validatedData = updateCardSchema.parse(input);
+
+    const updateCard = await prisma.card.update({
+      where: { id: validatedData.cardId },
+      data: {
+        accountId: validatedData.accountId,
+      },
+    });
+    console.log("Update of card is returning this: ", updateCard);
+    return updateCard;
+  } catch (error) {
+    console.error("Error updating card in the actions for this: ", error);
+    throw new Error("Error with card update");
+  }
+}
+
+export async function getCardSummary(cardId: string) {
+  const { user } = await validateRequest();
+
+  if (!user) throw Error("Unauthorized");
+
+  try {
+    const customerCard = await prisma.card.findUnique({
+      where: { id: cardId },
+      select: {
+        id: true,
+        cardType: true,
+        cardNumber: true,
+        expDate: true,
+        ccv: true,
+        accountId: true,
+        createdAt: true,
+      },
+    });
+    console.log("successfully found card");
+    return customerCard;
+  } catch (error) {
+    console.error("Failed to find card: ", error);
+  }
 }
