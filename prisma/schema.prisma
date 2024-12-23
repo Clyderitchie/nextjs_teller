@@ -45,7 +45,7 @@ model Customer {
   phoneNumber    String
   accounts       Account[]
   identification Identification[]
-  Card           Card[]
+  Card          Card[]
 
   @@map("customers")
 }
