@@ -3,7 +3,7 @@
 import { findAllCards } from "@/app/(main)/create/cards/actions";
 import { Button } from "@/components/ui/button";
 import { CreditCard } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CardSummary from "./CardSummary";
 
 interface Card {
@@ -38,6 +38,12 @@ export default function AllCards({ customerId }: AllCardsProps) {
   const handleCardClick = (cardId: string) => {
     setSelectedCardId(cardId);
   }
+
+  useEffect(() => {
+    if (isModalOpen) {
+      console.log("Component");
+    }
+  }, [isModalOpen]);
 
   return (
     <>
